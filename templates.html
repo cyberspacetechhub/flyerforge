@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FlyerForge Templates - Professional Design Templates</title>
+  <link rel="icon" type="image/png" href="images/flyerforge-logo2.png" />
+  <style>
+    :root{--green:#0b7a3b;--accent:#1a7a3b;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial}
+    body{margin:0;background:#f7f7f8;color:#111;padding:20px}
+    .container{max-width:1200px;margin:0 auto}
+    h1{text-align:center;color:var(--green);margin-bottom:30px}
+    .templates-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:30px;margin:30px 0}
+    .template{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.1);transition:transform 0.3s ease}
+    .template:hover{transform:translateY(-5px)}
+    .template-preview{height:400px;position:relative;overflow:hidden}
+    .template-info{padding:20px}
+    .template-name{font-size:20px;font-weight:700;margin-bottom:8px}
+    .template-desc{color:#666;margin-bottom:15px}
+    .use-btn{background:var(--green);color:#fff;border:none;padding:12px 24px;border-radius:8px;font-weight:600;cursor:pointer;width:100%}
+    .use-btn:hover{background:var(--accent)}
+
+    /* Template Designs */
+    .modern-tech{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;padding:30px;display:flex;flex-direction:column;justify-content:space-between}
+    .modern-tech .logo{width:60px;height:60px;background:#fff;border-radius:12px;margin-bottom:20px}
+    .modern-tech h2{font-size:28px;margin:0 0 10px 0;font-weight:800}
+    .modern-tech p{opacity:0.9;margin:0 0 20px 0}
+    .modern-tech .tags{display:flex;gap:8px;flex-wrap:wrap}
+    .modern-tech .tag{background:rgba(255,255,255,0.2);padding:4px 12px;border-radius:20px;font-size:12px}
+    .modern-tech .footer{margin-top:auto;padding-top:20px;border-top:1px solid rgba(255,255,255,0.2)}
+
+    .nature-green{background:linear-gradient(135deg,#10b981,#059669);color:#fff;padding:30px;position:relative}
+    .nature-green::before{content:'🌿';position:absolute;top:20px;right:20px;font-size:40px;opacity:0.3}
+    .nature-green .logo{width:60px;height:60px;background:#fff;border-radius:50%;margin-bottom:20px}
+    .nature-green h2{font-size:26px;margin:0 0 10px 0}
+    .nature-green .eco-badge{background:#fff;color:#10b981;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:600;display:inline-block;margin:10px 0}
+
+    .sunset-orange{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;padding:30px;position:relative}
+    .sunset-orange::after{content:'';position:absolute;top:0;right:0;width:100px;height:100px;background:radial-gradient(circle,rgba(255,255,255,0.2),transparent);border-radius:50%}
+    .sunset-orange h2{font-size:32px;margin:0 0 15px 0;text-shadow:2px 2px 4px rgba(0,0,0,0.3)}
+    .sunset-orange .creative-element{width:80px;height:4px;background:#fff;margin:15px 0;border-radius:2px}
+
+    .ocean-blue{background:linear-gradient(135deg,#3b82f6,#1d4ed8);color:#fff;padding:30px;position:relative}
+    .ocean-blue::before{content:'';position:absolute;bottom:0;left:0;width:100%;height:60px;background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><path d="M0,10 Q25,0 50,10 T100,10 V20 H0 Z" fill="rgba(255,255,255,0.1)"/></svg>') repeat-x}
+    .ocean-blue h2{font-size:24px;margin:0 0 10px 0;letter-spacing:1px}
+    .ocean-blue .trust-badge{border:2px solid #fff;padding:8px 16px;border-radius:8px;display:inline-block;margin:15px 0;font-size:12px;font-weight:600}
+
+    .royal-purple{background:linear-gradient(135deg,#8b5cf6,#7c3aed);color:#fff;padding:30px;position:relative}
+    .royal-purple::before{content:'👑';position:absolute;top:20px;right:20px;font-size:30px;opacity:0.4}
+    .royal-purple h2{font-size:28px;margin:0 0 10px 0;font-weight:300;letter-spacing:2px}
+    .royal-purple .luxury-line{width:60px;height:2px;background:linear-gradient(90deg,#fff,transparent);margin:15px 0}
+    .royal-purple .premium-badge{background:rgba(255,255,255,0.2);backdrop-filter:blur(10px);padding:8px 16px;border-radius:25px;font-size:11px;text-transform:uppercase;letter-spacing:1px}
+
+    .fire-red{background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;padding:30px;position:relative;overflow:hidden}
+    .fire-red::after{content:'';position:absolute;top:-50px;right:-50px;width:150px;height:150px;background:radial-gradient(circle,rgba(255,255,255,0.1),transparent);border-radius:50%}
+    .fire-red h2{font-size:30px;margin:0 0 10px 0;font-weight:900;text-transform:uppercase}
+    .fire-red .energy-bars{display:flex;gap:4px;margin:15px 0}
+    .fire-red .bar{width:30px;height:6px;background:#fff;border-radius:3px;opacity:0.8}
+    .fire-red .dynamic-text{font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:1px}
+    
+    /* Loader animations */
+    @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+  </style>
+</head>
+<body>
+  <!-- Page Loader -->
+  <div id="pageLoader" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column">
+    <img src="images/flyerforge-logo2.png" alt="FlyerForge" style="width:80px;height:80px;margin-bottom:20px;animation:pulse 2s infinite" />
+    <div style="width:50px;height:50px;border:4px solid #f3f3f3;border-top:4px solid #0b7a3b;border-radius:50%;animation:spin 1s linear infinite"></div>
+    <p style="margin-top:20px;color:#0b7a3b;font-weight:600">Loading Templates...</p>
+  </div>
+  
+  <div class="container">
+    <h1>🎨 FlyerForge Design Templates</h1>
+    <p style="text-align:center;color:#666;margin-bottom:40px">Choose from our professionally designed templates, each with unique layouts and visual elements</p>
+    
+    <div class="templates-grid">
+      <!-- Modern Tech Template -->
+      <div class="template">
+        <div class="template-preview modern-tech">
+          <div>
+            <div class="logo"></div>
+            <h2>Innovation Starts Here</h2>
+            <p>Cutting-edge solutions for modern businesses. Transform your ideas into reality.</p>
+            <div class="tags">
+              <span class="tag">innovation</span>
+              <span class="tag">technology</span>
+              <span class="tag">modern</span>
+            </div>
+          </div>
+          <div class="footer">
+            <div style="font-size:12px;opacity:0.8">Ready to innovate? Contact us today!</div>
+          </div>
+        </div>
+        <div class="template-info">
+          <div class="template-name">Modern Tech</div>
+          <div class="template-desc">Clean, professional design perfect for technology companies and startups</div>
+          <button class="use-btn" onclick="useTemplate('modern-tech')">Use This Template</button>
+        </div>
+      </div>
+
+      <!-- Nature Green Template -->
+      <div class="template">
+        <div class="template-preview nature-green">
+          <div class="logo"></div>
+          <h2>Go Green Today</h2>
+          <p>Sustainable solutions for a better tomorrow. Join the eco-revolution now.</p>
+          <div class="eco-badge">🌱 ECO FRIENDLY</div>
+          <div style="margin-top:auto;padding-top:20px;font-size:12px;opacity:0.9">
+            Choose sustainability. Choose the future!
+          </div>
+        </div>
+        <div class="template-info">
+          <div class="template-name">Nature Green</div>
+          <div class="template-desc">Eco-friendly design ideal for sustainable businesses and environmental services</div>
+          <button class="use-btn" onclick="useTemplate('nature-green')">Use This Template</button>
+        </div>
+      </div>
+
+      <!-- Sunset Orange Template -->
+      <div class="template">
+        <div class="template-preview sunset-orange">
+          <h2>Ignite Your Creativity</h2>
+          <div class="creative-element"></div>
+          <p>Bold ideas deserve bold execution. Let your creativity shine bright.</p>
+          <div style="margin-top:auto;padding-top:20px;font-size:12px;opacity:0.9">
+            Unleash your potential! Creative solutions that make a difference.
+          </div>
+        </div>
+        <div class="template-info">
+          <div class="template-name">Sunset Orange</div>
+          <div class="template-desc">Warm, energetic design perfect for creative agencies and artistic businesses</div>
+          <button class="use-btn" onclick="useTemplate('sunset-orange')">Use This Template</button>
+        </div>
+      </div>
+
+      <!-- Ocean Blue Template -->
+      <div class="template">
+        <div class="template-preview ocean-blue">
+          <h2>TRUST & EXCELLENCE</h2>
+          <div class="trust-badge">CERTIFIED PROFESSIONAL</div>
+          <p>Professional services you can depend on. Quality that speaks for itself.</p>
+          <div style="margin-top:auto;padding-top:20px;font-size:12px;opacity:0.9">
+            Experience the difference. Professional service, exceptional results.
+          </div>
+        </div>
+        <div class="template-info">
+          <div class="template-name">Ocean Blue</div>
+          <div class="template-desc">Trustworthy design ideal for professional services and corporate businesses</div>
+          <button class="use-btn" onclick="useTemplate('ocean-blue')">Use This Template</button>
+        </div>
+      </div>
+
+      <!-- Royal Purple Template -->
+      <div class="template">
+        <div class="template-preview royal-purple">
+          <h2>LUXURY REDEFINED</h2>
+          <div class="luxury-line"></div>
+          <p>Premium quality meets exceptional service. Experience true luxury.</p>
+          <div class="premium-badge">Premium Collection</div>
+          <div style="margin-top:auto;padding-top:20px;font-size:12px;opacity:0.9">
+            Indulge in luxury. Premium products, premium experience.
+          </div>
+        </div>
+        <div class="template-info">
+          <div class="template-name">Royal Purple</div>
+          <div class="template-desc">Luxury design perfect for premium brands and high-end services</div>
+          <button class="use-btn" onclick="useTemplate('royal-purple')">Use This Template</button>
+        </div>
+      </div>
+
+      <!-- Fire Red Template -->
+      <div class="template">
+        <div class="template-preview fire-red">
+          <h2>IGNITE SUCCESS</h2>
+          <div class="energy-bars">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+          </div>
+          <p>Dynamic solutions for ambitious goals. Fuel your business growth.</p>
+          <div class="dynamic-text">POWER • ENERGY • SUCCESS</div>
+          <div style="margin-top:auto;padding-top:20px;font-size:12px;opacity:0.9">
+            Ready to dominate? Powerful solutions for powerful results!
+          </div>
+        </div>
+        <div class="template-info">
+          <div class="template-name">Fire Red</div>
+          <div class="template-desc">Bold, dynamic design perfect for fitness, sports, and high-energy businesses</div>
+          <button class="use-btn" onclick="useTemplate('fire-red')">Use This Template</button>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin:40px 0;padding:30px;background:#fff;border-radius:12px">
+      <h3>🚀 Ready to Create Your Flyer?</h3>
+      <p>Choose a template above or start from scratch with our powerful flyer generator</p>
+      <button onclick="window.location.href='dailygenerator.html'" style="background:var(--green);color:#fff;border:none;padding:15px 30px;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer;margin:10px">
+        Open FlyerForge Generator
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const templateData = {
+      'modern-tech': {
+        colors: ['#6366f1', '#8b5cf6'],
+        headline: 'Innovation Starts Here',
+        subline: 'Cutting-edge solutions for modern businesses.<br>Transform your ideas into reality.',
+        tags: 'innovation, technology, modern, solutions',
+        advert: 'Ready to innovate? Contact us today for cutting-edge solutions!'
+      },
+      'nature-green': {
+        colors: ['#10b981', '#059669'],
+        headline: 'Go Green Today',
+        subline: 'Sustainable solutions for a better tomorrow.<br>Join the eco-revolution now.',
+        tags: 'eco, green, sustainable, nature',
+        advert: 'Choose sustainability. Choose the future. Go green with us!',
+      },
+      'sunset-orange': {
+        colors: ['#f59e0b', '#d97706'],
+        headline: 'Ignite Your Creativity',
+        subline: 'Bold ideas deserve bold execution.<br>Let your creativity shine bright.',
+        tags: 'creative, bold, energy, inspiration',
+        advert: 'Unleash your potential! Creative solutions that make a difference.',
+      },
+      'ocean-blue': {
+        colors: ['#3b82f6', '#1d4ed8'],
+        headline: 'Trust & Excellence',
+        subline: 'Professional services you can depend on.<br>Quality that speaks for itself.',
+        tags: 'professional, trust, quality, excellence',
+        advert: 'Experience the difference. Professional service, exceptional results.',
+      },
+      'royal-purple': {
+        colors: ['#8b5cf6', '#7c3aed'],
+        headline: 'Luxury Redefined',
+        subline: 'Premium quality meets exceptional service.<br>Experience true luxury.',
+        tags: 'luxury, premium, exclusive, elegant',
+        advert: 'Indulge in luxury. Premium products, premium experience.',
+      },
+      'fire-red': {
+        colors: ['#ef4444', '#dc2626'],
+        headline: 'Ignite Success',
+        subline: 'Dynamic solutions for ambitious goals.<br>Fuel your business growth.',
+        tags: 'dynamic, success, growth, ambitious',
+        advert: 'Ready to dominate? Powerful solutions for powerful results!',
+      }
+    };
+
+    function useTemplate(templateId) {
+      const template = templateData[templateId];
+      if (template) {
+        template.id = templateId;
+        localStorage.setItem('selectedTemplate', JSON.stringify(template));
+        window.location.href = 'dailygenerator.html?template=' + templateId;
+      }
+    }
+    
+    // Hide loader on page load
+    window.addEventListener('load', ()=>{
+      setTimeout(()=>{
+        document.getElementById('pageLoader').style.display = 'none';
+      }, 1500);
+    });
+  </script>
+</body>
+</html>

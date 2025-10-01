@@ -1,0 +1,2153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FlyerForge - Daily Post Generator | Create Professional Marketing Flyers | Cyberspace Tech Hub</title>
+  <meta name="description" content="Create stunning daily marketing flyers with FlyerForge. Professional post generator with customizable templates, image editing, and instant download. Perfect for businesses and social media marketing." />
+  <meta name="keywords" content="flyer generator, daily post creator, marketing flyers, social media posts, business flyers, graphic design tool, post templates, marketing automation" />
+  <meta name="author" content="Cyberspace Tech Hub" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="FlyerForge - Professional Daily Post Generator" />
+  <meta property="og:description" content="Create stunning marketing flyers and social media posts with our advanced post generator. Features image editing, templates, and instant download." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://cyberspacetechhub.vercel.app" />
+  <meta property="og:image" content="https://cyberspacetechhub.vercel.app/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="FlyerForge - Daily Post Generator" />
+  <meta name="twitter:description" content="Create professional marketing flyers with ease" />
+  <link rel="canonical" href="https://cyberspacetechhub.vercel.app/flyerforge" />
+  <link rel="icon" type="image/png" href="images/flyerforge-logo2.png" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    :root{--green:#0b7a3b;--accent:#1a7a3b;--muted:#666;--bg:#f7f7f8;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial}
+    body{margin:0;background:var(--bg);color:#111;padding:28px;display:flex;justify-content:center}
+    .app{width:100%;max-width:1100px}
+    header{display:flex;align-items:center;gap:18px;margin-bottom:18px}
+    h1{font-size:20px;margin:0}
+    .controls{display:flex;gap:12px;flex-wrap:wrap}
+    select,input,button,textarea{font-size:14px;padding:8px 10px;border-radius:8px;border:1px solid rgba(0,0,0,0.08)}
+    button{cursor:pointer}
+
+    .layout{display:grid;grid-template-columns:450px 1fr;gap:18px}
+    .description{background:#fff;padding:20px;border-radius:12px;box-shadow:0 6px 18px rgba(16,24,40,0.06);margin-bottom:18px}
+    .description h2{color:#0b7a3b;margin-bottom:15px;font-size:18px}
+    .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin:20px 0}
+    .feature{padding:15px;border:1px solid #e9ecef;border-radius:8px;text-align:center;transition:all 0.2s ease}
+    .feature:hover{border-color:#0b7a3b;transform:translateY(-2px);box-shadow:0 4px 12px rgba(11,122,59,0.1)}
+    .feature-icon{font-size:24px;margin-bottom:8px}
+    .steps{display:flex;gap:15px;margin:20px 0;flex-wrap:wrap}
+    .step{flex:1;min-width:150px;padding:15px;background:#f8f9fa;border-radius:8px;text-align:center}
+    .step-number{width:30px;height:30px;background:#0b7a3b;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-weight:bold}
+    .panel{background:#fff;padding:14px;border-radius:12px;box-shadow:0 6px 18px rgba(16,24,40,0.06)}
+
+    /* left controls */
+    .day-list{display:flex;gap:6px;margin-bottom:12px}
+    .day-btn{padding:8px 10px;border-radius:8px;background:transparent;border:1px solid #eee}
+    .day-btn.active{background:linear-gradient(90deg,var(--green),var(--accent));color:#fff;border:none}
+
+    .uploader{display:flex;flex-direction:column;gap:8px}
+    .preview-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+    .preview-grid img{width:90px;height:90px;object-fit:cover;border-radius:8px;border:1px solid #eee}
+
+    label{font-weight:600;font-size:13px}
+    .templates{display:flex;flex-direction:column;gap:8px}
+    .template-btn{padding:8px;border-radius:8px;background:#fafafa;border:1px dashed #e6e6e6}
+
+    /* right flyer preview */
+    .preview-wrap{display:flex;flex-direction:column;gap:12px}
+    .flyer{position:relative;width:100%;max-width:750px;background:#ffffff;box-shadow:0 6px 30px rgba(0,0,0,0.15);border-radius:16px;overflow:hidden;text-align:center;padding:30px 20px;margin:0 auto}
+    .flyer::before{content:"";position:absolute;top:0;right:0;width:200px;height:200px;background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%23e0f2fe" opacity="0.3"/><circle cx="30" cy="30" r="20" fill="%23bbdefb" opacity="0.2"/></svg>') no-repeat top right/contain;opacity:0.25;z-index:0}
+    .flyer::after{content:"";position:absolute;bottom:0;left:0;width:100px;height:100px;background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" fill="%23c8e6c9" opacity="0.2"/></svg>') no-repeat bottom left/contain;opacity:0.15;z-index:0}
+    .flyer-content{position:relative;z-index:1}
+    .flyer .top{display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px}
+    .flyer .logo{max-width:150px;height:auto;border-radius:12px;object-fit:contain;cursor:pointer;transition:all 0.2s ease;margin:0 auto 15px auto}
+    .flyer .logo:hover{transform:scale(1.05);box-shadow:0 4px 12px rgba(0,0,0,0.1)}
+    .flyer .title{width:100%}
+    .flyer svg.title-svg{width:100%;max-width:520px;height:50px}
+    .business-name{background:var(--green);color:#fff;padding:10px 20px;border-radius:8px;display:inline-block;font-size:18px;font-weight:600;margin:15px 0}
+    .flyer .desc{font-size:16px;color:var(--muted);margin-bottom:25px;line-height:1.6;text-align:center;padding:0}
+    .product-row{position:relative;min-height:200px;margin:20px 0;border:1px dashed #ddd;border-radius:8px;padding:10px}
+    .product-row img,.flyer .logo{position:relative;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,0.15);transition:all 0.2s ease;cursor:grab;min-width:60px;min-height:60px;resize:both;overflow:hidden}
+    .product-row img:hover,.flyer .logo:hover{transform:scale(1.05);z-index:10;border:2px solid #6366f1}
+    .product-row img:active,.flyer .logo:active{cursor:grabbing}
+    .product-row img.dragging{opacity:0.7;z-index:20}
+    .product-row img.selected,.flyer .logo.selected{border:2px solid #6366f1;z-index:15}
+    .product-row .featured-image{border:3px solid #10b981;z-index:5}
+    .resize-handle{position:absolute;bottom:0;right:0;width:15px;height:15px;background:#6366f1;cursor:se-resize;border-radius:3px 0 10px 0}
+    .delete-btn{position:absolute;top:-8px;right:-8px;width:20px;height:20px;background:#ef4444;color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:12px;display:none}
+    .product-row img:hover .delete-btn,.flyer .logo:hover .delete-btn{display:block}
+    .image-controls{position:absolute;top:-30px;right:0;display:none;gap:4px;background:#fff;padding:4px;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
+    .product-row img.selected + .image-controls{display:flex}
+    .control-btn{padding:2px 6px;font-size:10px;border:1px solid #ddd;background:#fff;border-radius:3px;cursor:pointer}
+
+    .tags{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0;justify-content:center}
+    .tag{background:linear-gradient(90deg,var(--green),var(--accent));color:#fff;padding:4px 8px;border-radius:12px;font-size:11px;font-weight:600}
+
+    .color-picker{width:0;height:0;opacity:0;position:absolute}
+    .color-btn{width:32px;height:32px;border:2px solid #ddd;border-radius:8px;cursor:pointer;margin-left:8px;display:flex;align-items:center;justify-content:center;transition:all 0.2s ease;background:#fff}
+    .color-btn:hover{transform:scale(1.1);border-color:#999;box-shadow:0 4px 8px rgba(0,0,0,0.1)}
+    .color-btn svg{width:20px;height:20px}
+    .section-control{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+
+    .advert{background:linear-gradient(135deg,#fff7e6,#fef3e2);padding:14px;border-radius:10px;color:#3a2e00;border:1px solid rgba(251,191,36,0.2);box-shadow:0 2px 8px rgba(251,191,36,0.1)}
+    .actions{display:flex;gap:8px;align-items:center}
+
+    .footer{padding:12px;border-radius:8px;margin-top:8px;border:1px solid #e2e8f0}
+    .footer-content{display:flex; flex-direction: column; justify-content: center; align-items: center;}
+    .footer-logo{width:40px;height:40px;border-radius:6px;object-fit:contain;background:#fff;border:1px solid #ddd}
+    .footer-info{display:flex; justify-content: center; align-items: center; flex-direction: column;}
+    .footer-item{padding:6px 8px;border-radius:4px;border:1px solid rgba(0,0,0,0.1)}
+    .footer-item strong{display:block;font-weight:600;margin-bottom:2px}
+    .bg-selector{display:flex;gap:4px;margin-top:4px}
+    .bg-option{width:16px;height:16px;border-radius:3px;cursor:pointer;border:2px solid transparent}
+    .bg-option.active{border-color:#333}
+
+    .small{font-size:12px;color:var(--muted)}
+    
+    /* Featured image styles */
+    .featured-container{position:relative;display:inline-block;max-width:200px}
+    .featured-img{max-width:200px;height:auto;border-radius:8px;border:2px solid #ddd}
+    .crop-overlay{position:absolute;border:2px dashed #6366f1;background:rgba(99,102,241,0.1);cursor:move;display:none}
+    #cropControls{display:flex}
+
+    /* Popup styles */
+    .popup-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:1000;display:flex;align-items:center;justify-content:center}
+    .popup{background:#fff;border-radius:16px;padding:30px;max-width:500px;width:90%;box-shadow:0 20px 40px rgba(0,0,0,0.3);position:relative;text-align:center}
+    .popup-close{position:absolute;top:15px;right:20px;background:none;border:none;font-size:24px;cursor:pointer;color:#666}
+    .popup h2{color:#0b7a3b;margin-bottom:15px}
+    .popup-logo{width:80px;height:80px;margin:0 auto 20px;background:linear-gradient(135deg,#0b7a3b,#1a7a3b);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:24px;font-weight:bold}
+    .popup-btn{background:linear-gradient(90deg,#0b7a3b,#1a7a3b);color:#fff;padding:12px 24px;border:none;border-radius:8px;font-weight:600;cursor:pointer;margin:10px 5px;text-decoration:none;display:inline-block}
+    .popup-btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(11,122,59,0.3)}
+    
+    /* Footer branding */
+    .brand-footer{background:#f8f9fa;border-top:1px solid #e9ecef;padding:20px;text-align:center;margin-top:30px}
+    .brand-footer a{color:#0b7a3b;text-decoration:none;font-weight:600}
+    .brand-footer a:hover{text-decoration:underline}
+    .copyright{font-size:12px;color:#666;margin-top:10px}
+
+    /* Tooltips and interactive elements */
+    .tooltip{position:relative;display:inline-block}
+    .tooltip .tooltiptext{visibility:hidden;width:200px;background:#333;color:#fff;text-align:center;border-radius:6px;padding:8px;position:absolute;z-index:1;bottom:125%;left:50%;margin-left:-100px;opacity:0;transition:opacity 0.3s;font-size:12px}
+    .tooltip:hover .tooltiptext{visibility:visible;opacity:1}
+    .help-icon{display:inline-block;width:16px;height:16px;background:#6c757d;color:#fff;border-radius:50%;text-align:center;font-size:10px;line-height:16px;margin-left:5px;cursor:help}
+    .interactive-demo{background:linear-gradient(135deg,#e3f2fd,#f3e5f5);padding:15px;border-radius:8px;margin:15px 0;border-left:4px solid #0b7a3b}
+    .demo-btn{background:#0b7a3b;color:#fff;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;margin:5px;font-size:12px}
+    .demo-btn:hover{background:#1a7a3b;transform:translateY(-1px)}
+    .progress-bar{width:100%;height:4px;background:#e9ecef;border-radius:2px;margin:10px 0}
+    .progress-fill{height:100%;background:linear-gradient(90deg,#0b7a3b,#1a7a3b);border-radius:2px;width:0%;transition:width 0.3s ease}
+
+    /* Template Modal */
+    .modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:2000;display:none;align-items:center;justify-content:center}
+    .modal-content{background:#fff;border-radius:16px;padding:30px;max-width:800px;width:90%;max-height:80vh;overflow-y:auto}
+    .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+    .modal-close{background:none;border:none;font-size:24px;cursor:pointer;color:#666}
+    
+    /* Response Modal */
+    .response-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:3000;display:none;align-items:center;justify-content:center}
+    .response-content{background:#fff;border-radius:12px;padding:25px;max-width:400px;width:90%;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.3)}
+    .response-icon{font-size:48px;margin-bottom:15px}
+    .response-title{font-size:18px;font-weight:600;margin-bottom:10px}
+    .response-message{color:#666;margin-bottom:20px;line-height:1.5}
+    .response-btn{background:#0b7a3b;color:#fff;border:none;padding:10px 20px;border-radius:6px;cursor:pointer;font-weight:600}
+    .star.active{opacity:1}
+    .template-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin:20px 0}
+    .template-card{border:2px solid #e9ecef;border-radius:12px;padding:15px;cursor:pointer;transition:all 0.2s ease;text-align:center}
+    .template-card:hover{border-color:#0b7a3b;transform:translateY(-2px);box-shadow:0 4px 12px rgba(11,122,59,0.1)}
+    .template-preview{width:100%;height:120px;border-radius:8px;margin-bottom:10px;position:relative;overflow:hidden}
+    .template-name{font-weight:600;margin-bottom:5px}
+    .template-desc{font-size:12px;color:#666}
+    .scratch-section{background:#f8f9fa;padding:20px;border-radius:12px;margin:20px 0;text-align:center}
+    .scratch-btn{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;padding:15px 30px;border:none;border-radius:10px;font-size:16px;font-weight:600;cursor:pointer;margin:10px}
+    .scratch-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(99,102,241,0.3)}
+
+    /* Quick upload grid */
+    .quick-img{position:relative;width:80px;height:80px;border-radius:8px;overflow:hidden;cursor:pointer;border:2px solid #ddd;transition:all 0.2s ease}
+    .quick-img:hover{border-color:#0b7a3b;transform:scale(1.05)}
+    .quick-img img{width:100%;height:100%;object-fit:cover}
+    .quick-options{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.8);color:#fff;padding:4px;display:none;flex-direction:column;gap:2px}
+    .quick-img:hover .quick-options{display:flex}
+    .quick-btn{background:none;border:none;color:#fff;font-size:10px;padding:2px;cursor:pointer;border-radius:2px}
+    .quick-btn:hover{background:rgba(255,255,255,0.2)}
+
+    /* responsive */
+    @media (max-width:980px){.layout{grid-template-columns:1fr}}
+    
+    /* Loader animation */
+    @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}} 
+  </style>
+</head>
+<body>
+  <!-- Page Loader -->
+  <div id="pageLoader" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column">
+    <img src="images/flyerforge-logo2.png" alt="FlyerForge" style="width:80px;height:80px;margin-bottom:20px;animation:pulse 2s infinite" />
+    <div style="width:50px;height:50px;border:4px solid #f3f3f3;border-top:4px solid #0b7a3b;border-radius:50%;animation:spin 1s linear infinite"></div>
+    <p style="margin-top:20px;color:#0b7a3b;font-weight:600">Loading FlyerForge...</p>
+  </div>
+  
+  <div class="app">
+    <header>
+      <h1>FlyerForge - Professional Daily Post Generator</h1>
+      <div class="controls">
+        <small class="small">Create stunning marketing flyers and social media posts with advanced editing tools.</small>
+      </div>
+    </header>
+    
+    <!-- Description Section -->
+    <div class="description">
+      <h2>🚀 Create Professional Marketing Flyers in Minutes</h2>
+      <p>FlyerForge is your complete solution for creating eye-catching daily posts and marketing flyers. Perfect for businesses, social media managers, and content creators.</p>
+      
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon">🎨</div>
+          <h4>Advanced Design Tools</h4>
+          <p>Image cropping, background removal, and positioning</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">📅</div>
+          <h4>Daily Organization</h4>
+          <p>Organize content by days of the week</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🤖</div>
+          <h4>AI-Powered Content</h4>
+          <p>Generate headlines, tags, and descriptions</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">⬇️</div>
+          <h4>Instant Download</h4>
+          <p>Export high-quality images ready for posting</p>
+        </div>
+      </div>
+      
+      <h3>How It Works:</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h4>Setup Business</h4>
+          <p>Add your business details and logo</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h4>Upload Images</h4>
+          <p>Add featured and product images</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h4>Customize Content</h4>
+          <p>Edit text, colors, and layout</p>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <h4>Download & Share</h4>
+          <p>Export and post to social media</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="layout">
+      <aside class="panel">
+        <div class="day-list" id="dayList"></div>
+
+        <div style="margin-top:8px">
+          <div style="display:flex;gap:8px;margin-bottom:10px">
+            <button onclick="window.open('templates.html','_blank')" style="background:#8b5cf6;color:#fff;border:none;padding:8px 16px;border-radius:6px;font-size:12px;flex:1">🎨 Browse Templates</button>
+            <button onclick="openTemplateModal()" style="background:#6366f1;color:#fff;border:none;padding:8px 16px;border-radius:6px;font-size:12px;flex:1">⚡ Quick Templates</button>
+          </div>
+          <div style="display:flex;gap:8px;margin-bottom:10px">
+            <button onclick="startFromScratch()" style="background:#ef4444;color:#fff;border:none;padding:8px 16px;border-radius:6px;font-size:12px;flex:1">✨ Start Fresh</button>
+          </div>
+          <label>Business Setup 
+            <span class="tooltip help-icon">?
+              <span class="tooltiptext">Enter your business information to personalize your flyers</span>
+            </span>
+          </label>
+          <div class="interactive-demo">
+            <p><strong>💡 Quick Start:</strong></p>
+            <button class="demo-btn" onclick="demoFillBusiness()">Try Demo Business</button>
+            <button class="demo-btn" onclick="clearBusiness()">Clear All</button>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <input id="businessNameInput" placeholder="Your Business Name" />
+            <select id="businessTypeSelect">
+              <option value="">Select Business Type</option>
+              <option value="restaurant">Restaurant/Food</option>
+              <option value="retail">Retail/Shopping</option>
+              <option value="tech">Technology/Software</option>
+              <option value="health">Health/Fitness</option>
+              <option value="beauty">Beauty/Salon</option>
+              <option value="education">Education/Training</option>
+              <option value="real-estate">Real Estate</option>
+              <option value="automotive">Automotive</option>
+              <option value="finance">Finance/Banking</option>
+              <option value="travel">Travel/Tourism</option>
+              <option value="electronics">Electronics</option>
+              <option value="gadgets">Gadgets</option>
+              <option value="smart-gadgets">Smart Gadgets</option>
+              <option value="phone-accessories">Phone & Accessories</option>
+              <option value="cryptocurrency">Cryptocurrency</option>
+              <option value="home-essentials">Home Essentials</option>
+              <option value="office-supplies">Office Supplies</option>
+              <option value="sports-equipment">Sports Equipment</option>
+              <option value="books-media">Books & Media</option>
+              <option value="jewelry">Jewelry & Accessories</option>
+            </select>
+          </div>
+        </div>
+
+        <hr style="margin:12px 0;border:none;border-top:1px solid #f0f0f0" />
+
+        <div style="margin-top:8px">
+          <label>Upload business logo 
+            <span class="tooltip help-icon">?
+              <span class="tooltiptext">Add your logo to appear in header and footer of flyers</span>
+            </span>
+          </label>
+          <div class="uploader">
+            <input type="file" id="logoInput" accept="image/*" />
+            <div class="small">Upload your business logo (appears in header and footer)</div>
+          </div>
+        </div>
+
+        <hr style="margin:12px 0;border:none;border-top:1px solid #f0f0f0" />
+
+        <div style="margin-top:8px">
+          <label>Featured Images 
+            <span class="tooltip help-icon">?
+              <span class="tooltiptext">Upload multiple featured images. Click images in flyer to resize or drag to reposition.</span>
+            </span>
+          </label>
+          <div class="uploader">
+            <input type="file" id="featuredInput" accept="image/*" multiple />
+            <div class="small">Upload featured images for today's post</div>
+            <div id="featuredPreview" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:8px"></div>
+          </div>
+        </div>
+
+        <hr style="margin:12px 0;border:none;border-top:1px solid #f0f0f0" />
+
+        <div style="margin-top:8px">
+          <label>Upload product images for selected day 
+            <span class="tooltip help-icon">?
+              <span class="tooltiptext">Add multiple product images. Drag and drop to reposition them in the flyer.</span>
+            </span>
+          </label>
+          <div class="uploader">
+            <input type="file" id="fileInput" accept="image/*" multiple />
+            <div class="small">Tip: you can upload many images; they are saved per-day in localStorage (browser).</div>
+            <div class="preview-grid" id="previewGrid"></div>
+          </div>
+        </div>
+
+        <hr style="margin:12px 0;border:none;border-top:1px solid #f0f0f0" />
+
+        <div>
+          <div class="section-control">
+            <label>Headline Section</label>
+            <input type="color" class="color-picker" id="headlineColorPicker" value="#0b7a3b" />
+            <div class="color-btn" onclick="document.getElementById('headlineColorPicker').click()">
+              <i class="bi bi-eyedropper"></i>
+            </div>
+            <button onclick="document.execCommand('bold')" style="margin-left:4px;padding:4px 8px;border:1px solid #ddd;background:#fff;border-radius:4px;cursor:pointer"><b>B</b></button>
+            <button onclick="document.execCommand('italic')" style="margin-left:2px;padding:4px 8px;border:1px solid #ddd;background:#fff;border-radius:4px;cursor:pointer"><i>I</i></button>
+          </div>
+          <div class="templates" id="templates">
+            <div class="template-btn">Fresh deals this <span id="tmpl-day">Monday</span> — grab yours today!</div>
+            <div class="template-btn">Special offer for <span id="tmpl-day2">Monday</span> only — limited stock.</div>
+            <div class="template-btn">Top picks for <span id="tmpl-day3">Monday</span> — trending now.</div>
+          </div>
+          <div style="margin-top:8px">
+            <input id="headlineInput" placeholder="Custom headline (appears on image)" />
+            <button id="aiHeadlineBtn" style="margin-top:4px;background:#6366f1;color:#fff;border:none;font-size:12px">🤖 AI Generate</button>
+          </div>
+        </div>
+
+        <hr style="margin:12px 0;border:none;border-top:1px solid #f0f0f0" />
+
+        <div>
+          <div class="section-control">
+            <label>Subline Section</label>
+            <input type="color" class="color-picker" id="sublineColorPicker" value="#666666" />
+            <div class="color-btn" onclick="document.getElementById('sublineColorPicker').click()">
+              <i class="bi bi-eyedropper"></i>
+            </div>
+            <button onclick="document.execCommand('bold')" style="margin-left:4px;padding:4px 8px;border:1px solid #ddd;background:#fff;border-radius:4px;cursor:pointer"><b>B</b></button>
+            <button onclick="document.execCommand('italic')" style="margin-left:2px;padding:4px 8px;border:1px solid #ddd;background:#fff;border-radius:4px;cursor:pointer"><i>I</i></button>
+          </div>
+          <input id="sublineInput" placeholder="e.g., Step into October with fresh opportunities..." />
+          <button id="aiSublineBtn" style="margin-top:4px;background:#6366f1;color:#fff;border:none;font-size:12px">🤖 AI Generate</button>
+          <div class="small">Short descriptive text under the headline</div>
+        </div>
+
+        <hr style="margin:12px 0;border:none;border-top:1px solid #f0f0f0" />
+
+        <div>
+          <div class="section-control">
+            <label>Tags Section</label>
+            <input type="color" class="color-picker" id="tagsColorPicker" value="#0b7a3b" />
+            <div class="color-btn" onclick="document.getElementById('tagsColorPicker').click()">
+              <i class="bi bi-eyedropper"></i>
+            </div>
+            <button onclick="document.execCommand('bold')" style="margin-left:4px;padding:4px 8px;border:1px solid #ddd;background:#fff;border-radius:4px;cursor:pointer"><b>B</b></button>
+            <button onclick="document.execCommand('italic')" style="margin-left:2px;padding:4px 8px;border:1px solid #ddd;background:#fff;border-radius:4px;cursor:pointer"><i>I</i></button>
+          </div>
+          <input id="tagsInput" placeholder="e.g., newday, newvideo, trending" />
+          <button id="aiTagsBtn" style="margin-top:4px;background:#6366f1;color:#fff;border:none;font-size:12px">🤖 AI Generate</button>
+          <div class="small">Add hashtags or keywords for your post</div>
+        </div>
+
+        <hr style="margin:12px 0;border:none;border-top:1px solid #f0f0f0" />
+
+        <div>
+          <div class="section-control">
+            <label>Advert Section</label>
+            <input type="color" class="color-picker" id="advertColorPicker" value="#3a2e00" />
+            <div class="color-btn" onclick="document.getElementById('advertColorPicker').click()">
+              <i class="bi bi-eyedropper"></i>
+            </div>
+            <button onclick="document.execCommand('bold')" style="margin-left:4px;padding:4px 8px;border:1px solid #ddd;background:#fff;border-radius:4px;cursor:pointer"><b>B</b></button>
+            <button onclick="document.execCommand('italic')" style="margin-left:2px;padding:4px 8px;border:1px solid #ddd;background:#fff;border-radius:4px;cursor:pointer"><i>I</i></button>
+          </div>
+          <textarea id="advertInput" rows="4" placeholder="Short advert like: We build modern websites — enquire now!" style="resize:vertical"></textarea>
+          <div style="display:flex;gap:4px;margin-top:8px">
+            <button id="generateAdvertBtn" style="background:var(--accent);color:#fff;border:none;font-size:12px">Generate Dynamic</button>
+            <button id="aiAdvertBtn" style="background:#6366f1;color:#fff;border:none;font-size:12px">🤖 AI Generate</button>
+          </div>
+        </div>
+
+        <hr style="margin:12px 0;border:none;border-top:1px solid #f0f0f0" />
+
+        <div>
+          <label>Footer Content</label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+            <input id="addressInput" placeholder="123 Business St, City" />
+            <input id="contactInput" placeholder="+1 (555) 123-4567" />
+            <input id="emailInput" placeholder="info@business.com" />
+            <input id="websiteInput" placeholder="www.business.com" />
+          </div>
+          <div class="section-control">
+            <label>Footer Background</label>
+            <input type="color" class="color-picker" id="footerColorPicker" value="#0b7a3b" />
+            <div class="color-btn" onclick="document.getElementById('footerColorPicker').click()">
+              <i class="bi bi-eyedropper"></i>
+            </div>
+          </div>
+          <div class="small">Business information that appears in the footer</div>
+        </div>
+
+        <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+          <button id="generateBtn">Generate Headline</button>
+          <button id="saveBtn">Save Day Data</button>
+          <button id="clearBtn">Clear Day Images</button>
+        </div>
+        
+        <div style="margin-top:8px">
+          <label>Image Layout 
+            <span class="tooltip help-icon">?
+              <span class="tooltiptext">Choose from preset layouts or drag images manually for custom positioning</span>
+            </span>
+          </label>
+          <div style="display:flex;gap:4px;margin-top:4px">
+            <button id="scatterBtn" style="font-size:12px;padding:4px 8px" title="Randomly scatter images">🎲 Scatter</button>
+            <button id="stackBtn" style="font-size:12px;padding:4px 8px" title="Stack images in a pile">📚 Stack</button>
+            <button id="circleBtn" style="font-size:12px;padding:4px 8px" title="Arrange in a circle">⭕ Circle</button>
+            <button id="resetLayoutBtn" style="font-size:12px;padding:4px 8px" title="Reset to default positions">↺ Reset</button>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressBar"></div>
+          </div>
+          <div class="small">Progress: <span id="progressText">0% Complete</span></div>
+        </div>
+
+        <div style="margin-top:12px">
+          <div class="small">Saved data is stored in your browser. Use the download button on the right to export the post image.</div>
+        </div>
+      </aside>
+
+      <main class="panel preview-wrap">
+        <div class="flyer" id="flyer">
+          <div class="flyer-content">
+            <div class="top">
+              <img src="your-logo.png" alt="logo" class="logo" id="flyerLogo">
+              
+              <div class="title">
+                <!-- SVG headline (keeps gradients when exported) -->
+                <svg class="title-svg" viewBox="0 0 1000 120" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <linearGradient id="g1" x1="0" x2="1">
+                      <stop offset="0" stop-color="#0b7a3b" id="headlineColor1" />
+                    <stop offset="1" stop-color="#1a7a3b" id="headlineColor2" />
+                    </linearGradient>
+                  </defs>
+                  <text id="svgHeadline" x="50%" y="70" text-anchor="middle" font-size="48" font-weight="800" fill="url(#g1)">WELCOME</text>
+                </svg>
+              </div>
+              <div class="business-name" id="flyerTags" style="font-size:18px;font-weight:600">New Month • New Dreams • New Goals</div>
+            </div>
+
+          <div class="desc" id="flyerDesc">Step into October with fresh opportunities and new possibilities.<br> May this month bring growth, innovation, and joy to you!</div>
+
+          <!-- <div class="tags" id="flyerTags">
+            <span class="tag">newday</span>
+            <span class="tag">newvideo</span>
+          </div> -->
+
+          <div class="product-row" id="flyerProducts"></div>
+
+          <div class="advert" id="flyerAdvert">Advert message will appear here. E.g. We build modern websites — enquire now!</div>
+
+            <div class="footer" id="flyerFooter" style="background:linear-gradient(90deg,var(--green),#1a7a3b);color:#fff;padding:20px;margin-top:30px;border-radius:12px;text-align:left">
+              <div class="footer-content">
+                  <h1 id="businessNameDisplay" style="margin-bottom: 10px;">Your business name</h1>
+                <div class="footer-info" style="font-size:14px;line-height:1.6">
+                  <div class="footer-item" id="footerAddress" style="margin-bottom:8px;background:none;border:none;padding:0">
+                    <strong style="display:inline;font-weight:600;margin-right:8px">Address:</strong>
+                    <span>123 Business St, City</span>
+                  </div>
+                  <div class="footer-item" id="footerContact" style="margin-bottom:8px;background:none;border:none;padding:0">
+                    <strong style="display:inline;font-weight:600;margin-right:8px">Phone:</strong>
+                    <span>+1 (555) 123-4567</span>
+                  </div>
+                  <div class="footer-item" id="footerEmail" style="margin-bottom:8px;background:none;border:none;padding:0">
+                    <strong style="display:inline;font-weight:600;margin-right:8px">Email:</strong>
+                    <span>info@business.com</span>
+                  </div>
+                  <div class="footer-item" id="footerWebsite" style="margin-bottom:8px;background:none;border:none;padding:0">
+                    <strong style="display:inline;font-weight:600;margin-right:8px">Website:</strong>
+                    <span>www.business.com</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div style="background:#f8f9fa;padding:15px;border-radius:8px;margin:15px 0;text-align:center">
+          <h4 style="margin:0 0 10px 0;color:#0b7a3b">📸 Quick Image Upload</h4>
+          <input type="file" id="quickUpload" accept="image/*" multiple style="margin-bottom:10px" />
+          <div style="font-size:12px;color:#666;margin-bottom:10px">💡 <strong>Tip:</strong> Click any image in the flyer to resize it. Drag images to reposition them.</div>
+          <div style="font-size:11px;color:#999;margin-bottom:10px">Max 10 images, 5MB each</div>
+          <div id="quickUploadGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-top:10px"></div>
+        </div>
+        
+        <div style="display:flex;justify-content:flex-end;align-items:center;margin-top:8px">
+          <div class="actions">
+            <button id="downloadBtn" style="background:linear-gradient(90deg,#0b7a3b,#1a7a3b);color:#fff;padding:10px 16px;border-radius:10px;border:none;font-weight:600;box-shadow:0 4px 12px rgba(11,122,59,0.3)">⬇️ Download Image</button>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:8px;justify-content:space-between;margin-top:10px;align-items:center">
+          <div>
+            <button id="previewBtn" style="background:#6366f1;color:#fff;padding:8px 12px;border:none;border-radius:6px">👁️ Preview</button>
+            <button id="templatesBtn" style="background:#8b5cf6;color:#fff;padding:8px 12px;border:none;border-radius:6px;margin-left:5px">🎨 Templates</button>
+            <button id="scratchBtn" style="background:#ef4444;color:#fff;padding:8px 12px;border:none;border-radius:6px;margin-left:5px">✨ New Design</button>
+          </div>
+          <div>
+            <button id="todayBtn">Load Today's Day</button>
+            <button id="prevDay">◀ Prev</button>
+            <button id="nextDay">Next ▶</button>
+          </div>
+        </div>
+        
+        <!-- Quick Stats -->
+        <div style="background:#f8f9fa;padding:15px;border-radius:8px;margin-top:15px;text-align:center">
+          <h4 style="margin:0 0 10px 0;color:#0b7a3b">📈 Your FlyerForge Stats</h4>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;font-size:12px">
+            <div><strong id="flyersCreated">0</strong><br>Flyers Created</div>
+            <div><strong id="imagesUploaded">0</strong><br>Images Uploaded</div>
+            <div><strong id="daysActive">1</strong><br>Days Active</div>
+          </div>
+        </div>
+      </main>
+    </div>
+    
+    <!-- Premium Features Banner -->
+    <div style="background:linear-gradient(135deg,#0b7a3b,#1a7a3b);color:#fff;padding:20px;border-radius:12px;margin:20px 0;text-align:center">
+      <h3 style="margin:0 0 10px 0">🎆 100% FREE Forever - No Limits!</h3>
+      <p style="margin:0 0 15px 0">Professional flyer creation tool by Cyberspace Tech Hub</p>
+      <div style="display:flex;gap:15px;justify-content:center;flex-wrap:wrap;font-size:14px">
+        <span>✓ Unlimited Flyers</span>
+        <span>✓ All Features Included</span>
+        <span>✓ No Watermarks</span>
+        <span>✓ High-Quality Downloads</span>
+        <span>✓ Commercial Use OK</span>
+      </div>
+    </div>
+    
+    <!-- Customer Reviews Section -->
+    <div style="background:#f8f9fa;padding:20px;border-radius:12px;margin:20px 0;text-align:center">
+      <h3 style="margin:0 0 15px 0;color:#0b7a3b">💬 What Our Customers Say</h3>
+      
+      <!-- Testimonials Slider -->
+      <div style="position:relative;overflow:hidden;border-radius:8px;background:#fff;margin:15px 0;box-shadow:0 2px 8px rgba(0,0,0,0.1)">
+        <div id="testimonialsSlider" style="display:flex;transition:transform 0.5s ease"></div>
+        <div style="text-align:center;margin:10px 0">
+          <button onclick="prevTestimonial()" style="background:#0b7a3b;color:#fff;border:none;padding:5px 10px;margin:0 5px;border-radius:4px;cursor:pointer;font-size:12px">←</button>
+          <button onclick="nextTestimonial()" style="background:#0b7a3b;color:#fff;border:none;padding:5px 10px;margin:0 5px;border-radius:4px;cursor:pointer;font-size:12px">→</button>
+        </div>
+      </div>
+      
+      <div style="display:flex;gap:15px;justify-content:center;flex-wrap:wrap">
+        <button onclick="openReviewModal()" style="background:#3b82f6;color:#fff;padding:10px 20px;border:none;border-radius:8px;cursor:pointer;font-size:14px;transition:all 0.3s ease">📝 Leave a Review</button>
+        <button onclick="openDrinkModal()" style="background:#f59e0b;color:#fff;padding:10px 20px;border:none;border-radius:8px;cursor:pointer;font-size:14px;transition:all 0.3s ease">☕ Buy Us a Drink</button>
+      </div>
+      <p style="margin:10px 0 0 0;font-size:12px;color:#666">Enjoying our free tool? Help us keep improving!</p>
+    </div>
+    
+    <!-- Brand Footer -->
+    <div class="brand-footer">
+      <p>Crafted with ❤️ by <a href="https://cyberspacetechhub.vercel.app" target="_blank">Cyberspace Tech Hub</a> | <strong>FlyerForge</strong> - Your Free Marketing Companion</p></p>
+      <div class="copyright">
+        © 2024 Cyberspace Tech Hub. All rights reserved. | FlyerForge - Professional Marketing Tools<br>
+        <small>Share this tool: <a href="#" onclick="shareApp()" style="color:#0b7a3b">🔗 Copy Link</a> | 
+        <a href="https://twitter.com/intent/tweet?text=Check%20out%20FlyerForge%20-%20Free%20professional%20flyer%20creator!&url=https://cyberspacetechhub.vercel.app" target="_blank" style="color:#0b7a3b">🐦 Tweet</a></small>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Template Modal -->
+  <div class="modal" id="templateModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>🎨 Choose Your Template</h2>
+        <button class="modal-close" onclick="closeTemplateModal()">&times;</button>
+      </div>
+      
+      <div class="scratch-section">
+        <h3>✨ Start from Scratch</h3>
+        <p>Create your own unique design with complete creative control</p>
+        <button class="scratch-btn" onclick="startFromScratch()">🎨 Blank Canvas</button>
+      </div>
+      
+      <h3>📄 Professional Templates</h3>
+      <div class="template-grid" id="templateGrid"></div>
+    </div>
+  </div>
+  
+  <!-- Response Modal -->
+  <div class="response-modal" id="responseModal">
+    <div class="response-content">
+      <div class="response-icon" id="responseIcon"></div>
+      <div class="response-title" id="responseTitle"></div>
+      <div class="response-message" id="responseMessage"></div>
+      <button class="response-btn" onclick="closeResponseModal()">OK</button>
+    </div>
+  </div>
+  
+  <!-- Review Modal -->
+  <div class="modal" id="reviewModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>📝 Leave a Review</h2>
+        <button class="modal-close" onclick="closeReviewModal()">&times;</button>
+      </div>
+      <form onsubmit="submitReview(event)">
+        <div style="margin-bottom:15px">
+          <label style="display:block;margin-bottom:5px;font-weight:bold">Your Name:</label>
+          <input type="text" id="reviewName" required style="width:100%;padding:10px;border:1px solid #ddd;border-radius:6px">
+        </div>
+        <div style="margin-bottom:15px">
+          <label style="display:block;margin-bottom:5px;font-weight:bold">Email:</label>
+          <input type="email" id="reviewEmail" required style="width:100%;padding:10px;border:1px solid #ddd;border-radius:6px">
+        </div>
+        <div style="margin-bottom:15px">
+          <label style="display:block;margin-bottom:5px;font-weight:bold">Phone:</label>
+          <input type="tel" id="reviewPhone" required style="width:100%;padding:10px;border:1px solid #ddd;border-radius:6px">
+        </div>
+        <div style="margin-bottom:15px">
+          <label style="display:block;margin-bottom:5px;font-weight:bold">Rating:</label>
+          <div class="star-rating" style="font-size:24px;cursor:pointer">
+            <span class="star" data-rating="1" style="opacity:0.3;transition:opacity 0.2s">⭐</span>
+            <span class="star" data-rating="2" style="opacity:0.3;transition:opacity 0.2s">⭐</span>
+            <span class="star" data-rating="3" style="opacity:0.3;transition:opacity 0.2s">⭐</span>
+            <span class="star" data-rating="4" style="opacity:0.3;transition:opacity 0.2s">⭐</span>
+            <span class="star" data-rating="5" style="opacity:0.3;transition:opacity 0.2s">⭐</span>
+          </div>
+        </div>
+        <div style="margin-bottom:15px">
+          <label style="display:block;margin-bottom:5px;font-weight:bold">Your Review:</label>
+          <textarea id="reviewText" rows="4" required style="width:100%;padding:10px;border:1px solid #ddd;border-radius:6px;resize:vertical"></textarea>
+        </div>
+        <button type="submit" style="background:#10b981;color:#fff;padding:12px 24px;border:none;border-radius:6px;cursor:pointer;font-size:16px;width:100%">Submit Review</button>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Drink Modal -->
+  <div class="modal" id="drinkModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>☕ Buy Us a Drink</h2>
+        <button class="modal-close" onclick="closeDrinkModal()">&times;</button>
+      </div>
+      <p style="text-align:center;margin-bottom:20px">Enjoying our free tool? Help us keep the lights on with a small donation!</p>
+      <div style="display:flex;flex-direction:column;gap:10px;margin:20px 0">
+        <button onclick="selectPayment('bank')" style="padding:12px;border:2px solid #e5e7eb;border-radius:8px;background:#fff;cursor:pointer;font-size:16px;transition:all 0.3s ease">🏦 Bank Transfer</button>
+        <button onclick="selectPayment('crypto')" style="padding:12px;border:2px solid #e5e7eb;border-radius:8px;background:#fff;cursor:pointer;font-size:16px;transition:all 0.3s ease">₿ Cryptocurrency</button>
+        <button onclick="selectPayment('international')" style="padding:12px;border:2px solid #e5e7eb;border-radius:8px;background:#fff;cursor:pointer;font-size:16px;transition:all 0.3s ease">🌍 International Account</button>
+      </div>
+      <div id="paymentDetails" style="margin-top:20px;padding:15px;background:#f8fafc;border-radius:8px;display:none"></div>
+    </div>
+  </div>
+  
+  <!-- Promotional Popup -->
+  <div class="popup-overlay" id="promoPopup">
+    <div class="popup">
+      <button class="popup-close" onclick="closePopup()">&times;</button>
+      <div class="popup-logo">CTH</div>
+      <h2>Welcome to FlyerForge!</h2>
+      <p><strong>Powered by Cyberspace Tech Hub</strong></p>
+      <p>Discover our complete suite of digital solutions:</p>
+      <ul style="text-align:left;margin:20px 0">
+        <li>🚀 Web Development & Design</li>
+        <li>📱 Mobile App Development</li>
+        <li>🎨 Graphic Design & Branding</li>
+        <li>📊 Digital Marketing Solutions</li>
+        <li>🛠️ Custom Software Development</li>
+        <li>☁️ Cloud Services & Hosting</li>
+      </ul>
+      <p>Transform your business with cutting-edge technology!</p>
+      <a href="https://cyberspacetechhub.vercel.app" target="_blank" class="popup-btn">Visit Our Website</a>
+      <button onclick="closePopup()" class="popup-btn" style="background:#6c757d">Continue to FlyerForge</button>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script>
+    // DAYS array and simple state
+    const DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+    let currentDayIndex = 0;
+
+    // Utilities for localStorage keying
+    function storageKey(day){ return 'daily-posts-'+day }
+
+    // init day buttons
+    const dayList = document.getElementById('dayList');
+    DAYS.forEach((d,i)=>{
+      const btn = document.createElement('button');
+      btn.textContent = d.slice(0,3);
+      btn.className = 'day-btn';
+      if(i===0) btn.classList.add('active');
+      btn.addEventListener('click', ()=>{ setDay(i) });
+      dayList.appendChild(btn);
+    });
+
+    function setDay(i){
+      currentDayIndex = i;
+      // update active
+      document.querySelectorAll('.day-btn').forEach((b,idx)=> b.classList.toggle('active', idx===i));
+      // update template placeholders
+      document.querySelectorAll('#tmpl-day, #tmpl-day2, #tmpl-day3').forEach(el=>el.textContent = DAYS[i]);
+      // load data
+      loadDayData();
+    }
+
+    // file upload handling
+    const fileInput = document.getElementById('fileInput');
+    const previewGrid = document.getElementById('previewGrid');
+    fileInput.addEventListener('change', async (e)=>{
+      const files = Array.from(e.target.files);
+      const images = await Promise.all(files.map(f => fileToDataURL(f)));
+      const key = storageKey(DAYS[currentDayIndex]);
+      const existing = JSON.parse(localStorage.getItem(key)||'{}');
+      existing.images = (existing.images||[]).concat(images);
+      localStorage.setItem(key, JSON.stringify(existing));
+      renderPreviews();
+      renderFlyerProducts();
+      fileInput.value = '';
+      incrementStat('images');
+    });
+
+    function fileToDataURL(file){
+      return new Promise(res=>{
+        const reader = new FileReader();
+        reader.onload = ()=>res(reader.result);
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function renderPreviews(){
+      const key = storageKey(DAYS[currentDayIndex]);
+      const data = JSON.parse(localStorage.getItem(key)||'{}');
+      previewGrid.innerHTML = '';
+      (data.images||[]).forEach((src,idx)=>{
+        const img = document.createElement('img'); img.src = src; img.alt = 'img'+idx;
+        img.addEventListener('click', ()=>{ // remove on click
+          if(!confirm('Remove this image from day '+DAYS[currentDayIndex]+'?')) return;
+          data.images.splice(idx,1);
+          localStorage.setItem(key, JSON.stringify(data));
+          renderPreviews(); renderFlyerProducts();
+        });
+        previewGrid.appendChild(img);
+      });
+    }
+
+    // Templates and generation
+    const headlineTemplates = [
+      (day)=>`Fresh deals this ${day} — grab yours today!`,
+      (day)=>`Special offer for ${day} only — limited stock.`,
+      (day)=>`Top picks for ${day} — trending now.`,
+      (day)=>`${day} specials — don't miss out!`,
+      (day)=>`New arrivals this ${day} — shop now!`,
+      (day)=>`${day} flash sale — limited time only!`
+    ];
+
+    const businessTemplates = {
+      restaurant: {
+        headlines: ['Fresh flavors this {day} — taste the difference!', 'Special menu for {day} — limited time!', '{day} chef specials — book now!'],
+        sublines: ['Savor authentic flavors crafted with passion.<br>Every dish tells a story of culinary excellence!', 'Experience fine dining at its best.<br>Fresh ingredients, exceptional taste!'],
+        adverts: ['Book your table today — unforgettable dining awaits!', 'Fresh ingredients, authentic flavors — taste the difference!'],
+        tags: ['freshfood', 'dining', 'chef special']
+      },
+      retail: {
+        headlines: ['New arrivals this {day} — shop the latest!', '{day} flash sale — up to 50% off!', 'Trending items this {day} — get yours!'],
+        sublines: ['Discover the latest trends and timeless classics.<br>Quality fashion that defines your style!', 'Shop smart, look great, feel confident.<br>Your style journey starts here!'],
+        adverts: ['Visit our store today — style meets affordability!', 'Quality products, unbeatable prices — shop now!'],
+        tags: ['fashion', 'sale', 'trending']
+      },
+      tech: {
+        headlines: ['Tech innovations this {day} — upgrade now!', '{day} digital solutions — transform your business!', 'Smart tech for {day} — stay ahead!'],
+        sublines: ['Cutting-edge technology for modern solutions.<br>Innovation that drives your success forward!', 'Digital transformation made simple.<br>Technology that works for you!'],
+        adverts: ['Upgrade your tech today — innovation awaits!', 'Smart solutions for modern challenges — contact us!'],
+        tags: ['innovation', 'digital', 'tech']
+      },
+      health: {
+        headlines: ['Fitness goals this {day} — start your journey!', '{day} wellness special — feel your best!', 'Health transformation {day} — join us!'],
+        sublines: ['Your health is your wealth — invest in yourself.<br>Professional guidance for lasting results!', 'Transform your body, elevate your mind.<br>Wellness journey starts today!'],
+        adverts: ['Start your fitness journey — professional trainers ready!', 'Achieve your health goals — expert guidance available!'],
+        tags: ['fitness', 'wellness', 'health']
+      },
+      beauty: {
+        headlines: ['Beauty treatments this {day} — look stunning!', '{day} makeover special — feel beautiful!', 'Glow up {day} — book your session!'],
+        sublines: ['Enhance your natural beauty with expert care.<br>Professional treatments for radiant results!', 'Beauty that shines from within.<br>Pamper yourself, you deserve it!'],
+        adverts: ['Book your beauty session — expert stylists available!', 'Look and feel amazing — professional beauty services!'],
+        tags: ['beauty', 'makeover', 'glow']
+      },
+      electronics: {
+        headlines: ['Latest electronics this {day} — upgrade now!', '{day} tech deals — save big!', 'Premium electronics {day} — shop today!'],
+        sublines: ['Cutting-edge electronics for modern living.<br>Quality products with warranty guarantee!', 'Power up your life with premium electronics.<br>Innovation meets affordability!'],
+        adverts: ['Shop electronics today — best prices guaranteed!', 'Quality electronics with warranty — upgrade now!'],
+        tags: ['electronics', 'tech', 'gadgets']
+      },
+      gadgets: {
+        headlines: ['Cool gadgets this {day} — must-have items!', '{day} gadget sale — limited stock!', 'Trending gadgets {day} — get yours!'],
+        sublines: ['Discover amazing gadgets that simplify life.<br>Innovation at your fingertips!', 'Smart gadgets for smart people.<br>Make life easier with our collection!'],
+        adverts: ['Explore our gadgets — innovation awaits!', 'Smart gadgets, smarter prices — shop now!'],
+        tags: ['gadgets', 'innovation', 'smart']
+      },
+      'smart-gadgets': {
+        headlines: ['Smart gadgets this {day} — future is here!', '{day} smart tech — automate your life!', 'AI gadgets {day} — be ahead!'],
+        sublines: ['Smart technology for intelligent living.<br>Connect, control, and automate everything!', 'Experience the future with smart gadgets.<br>Intelligence meets convenience!'],
+        adverts: ['Go smart today — intelligent gadgets available!', 'Smart living starts here — explore our range!'],
+        tags: ['smart', 'AI', 'automation']
+      },
+      'phone-accessories': {
+        headlines: ['Phone accessories this {day} — protect & style!', '{day} mobile deals — cases & more!', 'Phone gear {day} — complete your setup!'],
+        sublines: ['Protect and personalize your mobile device.<br>Quality accessories for every phone!', 'Style meets protection in our accessories.<br>Complete your mobile experience!'],
+        adverts: ['Protect your phone — quality accessories here!', 'Mobile accessories that matter — shop now!'],
+        tags: ['mobile', 'accessories', 'protection']
+      },
+      cryptocurrency: {
+        headlines: ['Crypto insights this {day} — trade smart!', '{day} blockchain news — stay informed!', 'Digital assets {day} — invest wisely!'],
+        sublines: ['Navigate the crypto world with confidence.<br>Expert guidance for digital investments!', 'Your gateway to cryptocurrency success.<br>Learn, trade, and grow your portfolio!'],
+        adverts: ['Start crypto trading — expert guidance available!', 'Crypto made simple — join our community!'],
+        tags: ['crypto', 'blockchain', 'trading']
+      },
+      'home-essentials': {
+        headlines: ['Home essentials this {day} — comfort first!', '{day} home deals — upgrade your space!', 'Essential items {day} — make home better!'],
+        sublines: ['Everything you need for a comfortable home.<br>Quality essentials at great prices!', 'Transform your space with our essentials.<br>Home is where comfort begins!'],
+        adverts: ['Shop home essentials — comfort guaranteed!', 'Make your house a home — browse our collection!'],
+        tags: ['home', 'essentials', 'comfort']
+      },
+      'office-supplies': {
+        headlines: ['Office supplies this {day} — work efficiently!', '{day} workspace deals — boost productivity!', 'Office gear {day} — professional setup!'],
+        sublines: ['Professional supplies for productive workspaces.<br>Everything you need to succeed!', 'Organize your office, organize your success.<br>Quality supplies for professionals!'],
+        adverts: ['Upgrade your office — professional supplies here!', 'Work smarter with our office solutions!'],
+        tags: ['office', 'productivity', 'professional']
+      },
+      'sports-equipment': {
+        headlines: ['Sports gear this {day} — play your best!', '{day} fitness deals — stay active!', 'Athletic equipment {day} — train hard!'],
+        sublines: ['Quality sports equipment for peak performance.<br>Gear up for your fitness journey!', 'Achieve your athletic goals with our gear.<br>Performance meets durability!'],
+        adverts: ['Get fit with quality gear — shop sports equipment!', 'Train like a pro — premium equipment available!'],
+        tags: ['sports', 'fitness', 'athletic']
+      },
+      'books-media': {
+        headlines: ['Books & media this {day} — expand your mind!', '{day} reading deals — knowledge awaits!', 'Educational content {day} — learn more!'],
+        sublines: ['Expand your knowledge with our collection.<br>Books, media, and learning resources!', 'Feed your mind with quality content.<br>Learning never stops with our selection!'],
+        adverts: ['Discover new worlds — books and media here!', 'Knowledge is power — explore our library!'],
+        tags: ['books', 'education', 'learning']
+      },
+      jewelry: {
+        headlines: ['Jewelry collection this {day} — shine bright!', '{day} accessories — express yourself!', 'Premium jewelry {day} — look stunning!'],
+        sublines: ['Beautiful jewelry for every occasion.<br>Express your style with our collection!', 'Elegance and beauty in every piece.<br>Find your perfect accessory today!'],
+        adverts: ['Shine with our jewelry — beautiful pieces await!', 'Express your style — premium jewelry collection!'],
+        tags: ['jewelry', 'fashion', 'elegant']
+      }
+    };
+
+    const advertTemplates = [
+      "Transform your business with our innovative solutions — contact us today!",
+      "Quality products, exceptional service — your success is our priority!",
+      "Join thousands of satisfied customers — experience the difference!",
+      "Professional services tailored to your needs — get started now!",
+      "Unlock your potential with our expert guidance — let's grow together!",
+      "Premium quality at unbeatable prices — discover what we offer!"
+    ];
+
+    const sublineTemplates = [
+      "Step into October with fresh opportunities and new possibilities.<br>May this month bring growth, innovation, and joy to you!",
+      "Embrace the season of change with exciting new ventures.<br>Your journey to success starts here!",
+      "Discover endless possibilities this month.<br>Let's create something amazing together!",
+      "New month, new goals, new achievements.<br>Make every moment count!",
+      "Welcome to a world of opportunities.<br>Your dreams are within reach!"
+    ];
+
+    document.getElementById('generateBtn').addEventListener('click', ()=>{
+      const businessType = document.getElementById('businessTypeSelect').value;
+      let h;
+      if(businessType && businessTemplates[businessType]){
+        const typeTemplates = businessTemplates[businessType].headlines;
+        h = typeTemplates[Math.floor(Math.random()*typeTemplates.length)].replace('{day}', DAYS[currentDayIndex]);
+      } else {
+        h = headlineTemplates[Math.floor(Math.random()*headlineTemplates.length)](DAYS[currentDayIndex]);
+      }
+      document.getElementById('headlineInput').value = h;
+      updateHeadline();
+    });
+
+    document.getElementById('generateAdvertBtn').addEventListener('click', ()=>{
+      const businessType = document.getElementById('businessTypeSelect').value;
+      let advert;
+      if(businessType && businessTemplates[businessType]){
+        const typeAdverts = businessTemplates[businessType].adverts;
+        advert = typeAdverts[Math.floor(Math.random()*typeAdverts.length)];
+      } else {
+        advert = advertTemplates[Math.floor(Math.random()*advertTemplates.length)];
+      }
+      document.getElementById('advertInput').value = advert;
+      document.getElementById('flyerAdvert').innerHTML = advert;
+    });
+
+    // Business name input
+    const businessNameInput = document.getElementById('businessNameInput');
+    businessNameInput.addEventListener('input', ()=>{
+      const name = businessNameInput.value || 'Your Business Name';
+      const businessNameEl = document.getElementById('businessNameDisplay');
+      if(businessNameEl) businessNameEl.textContent = name;
+    });
+
+    // Color pickers
+    document.getElementById('headlineColorPicker').addEventListener('input', (e)=>{
+      document.getElementById('headlineColor1').setAttribute('stop-color', e.target.value);
+      document.getElementById('headlineColor2').setAttribute('stop-color', e.target.value);
+    });
+    document.getElementById('sublineColorPicker').addEventListener('input', (e)=>{
+      document.getElementById('flyerDesc').style.color = e.target.value;
+    });
+    document.getElementById('tagsColorPicker').addEventListener('input', (e)=>{
+      document.querySelectorAll('.tag').forEach(tag=>{
+        tag.style.background = e.target.value;
+      });
+    });
+    document.getElementById('advertColorPicker').addEventListener('input', (e)=>{
+      document.getElementById('flyerAdvert').style.color = e.target.value;
+    });
+    document.getElementById('footerColorPicker').addEventListener('input', (e)=>{
+      document.getElementById('flyerFooter').style.background = `linear-gradient(90deg,${e.target.value},${e.target.value}dd)`;
+    });
+
+    // AI Generation functions with fallback
+    async function generateAIContent(prompt, type) {
+      // For demo purposes, use local templates instead of API
+      // Replace this section with actual API call when you have a valid key
+      return generateFallbackContent(type);
+    }
+
+    function generateFallbackContent(type) {
+      const businessType = document.getElementById('businessTypeSelect').value;
+      const businessName = document.getElementById('businessNameInput').value || 'Your Business';
+      const day = DAYS[currentDayIndex];
+      
+      switch(type) {
+        case 'headline':
+          if(businessType && businessTemplates[businessType]) {
+            const templates = businessTemplates[businessType].headlines;
+            return templates[Math.floor(Math.random()*templates.length)].replace('{day}', day);
+          }
+          return `${day} Special at ${businessName} — Don't Miss Out!`;
+          
+        case 'subline':
+          if(businessType && businessTemplates[businessType]) {
+            const templates = businessTemplates[businessType].sublines;
+            return templates[Math.floor(Math.random()*templates.length)];
+          }
+          return `Experience excellence at ${businessName}.<br>Quality service that exceeds expectations!`;
+          
+        case 'tags':
+          if(businessType && businessTemplates[businessType]) {
+            return businessTemplates[businessType].tags.join(', ');
+          }
+          return 'quality, service, excellence, trending';
+          
+        case 'advert':
+          if(businessType && businessTemplates[businessType]) {
+            const templates = businessTemplates[businessType].adverts;
+            return templates[Math.floor(Math.random()*templates.length)];
+          }
+          return `Visit ${businessName} today — experience the difference!`;
+          
+        default:
+          return null;
+      }
+    }
+
+    document.getElementById('aiHeadlineBtn').addEventListener('click', async ()=>{
+      const result = await generateAIContent('', 'headline');
+      if(result) {
+        document.getElementById('headlineInput').value = result;
+        updateHeadline();
+      }
+    });
+
+    document.getElementById('aiSublineBtn').addEventListener('click', async ()=>{
+      const result = await generateAIContent('', 'subline');
+      if(result) {
+        document.getElementById('sublineInput').value = result;
+        document.getElementById('flyerDesc').innerHTML = result;
+      }
+    });
+
+    document.getElementById('aiTagsBtn').addEventListener('click', async ()=>{
+      const result = await generateAIContent('', 'tags');
+      if(result) {
+        document.getElementById('tagsInput').value = result;
+        const tags = result.split(',').map(t=>t.trim()).filter(t=>t);
+        const container = document.getElementById('flyerTags');
+        container.innerHTML = '';
+        tags.forEach(tag=>{
+          const span = document.createElement('span');
+          span.className = 'tag';
+          span.textContent = tag;
+          container.appendChild(span);
+        });
+      }
+    });
+
+    document.getElementById('aiAdvertBtn').addEventListener('click', async ()=>{
+      const result = await generateAIContent('', 'advert');
+      if(result) {
+        document.getElementById('advertInput').value = result;
+        document.getElementById('flyerAdvert').innerHTML = result;
+      }
+    });
+
+    // headline input binds into SVG
+    const headlineInput = document.getElementById('headlineInput');
+    headlineInput.addEventListener('input', updateHeadline);
+    function updateHeadline(){
+      const text = headlineInput.value.trim() || (DAYS[currentDayIndex]+" Picks");
+      const svgText = document.getElementById('svgHeadline');
+      const svg = document.querySelector('.title-svg');
+      
+      svgText.textContent = text.toUpperCase();
+      
+      // Adjust viewBox width based on text length to prevent cutting
+      const textLength = text.length;
+      let viewBoxWidth = Math.max(1000, textLength * 50);
+      
+      // Keep font size large, just expand the container
+      svgText.setAttribute('font-size', '48');
+      svg.setAttribute('viewBox', `0 0 ${viewBoxWidth} 120`);
+    }
+
+    // logo upload handling
+    const logoInput = document.getElementById('logoInput');
+    logoInput.addEventListener('change', async (e)=>{
+      if(e.target.files[0]){
+        const logoData = await fileToDataURL(e.target.files[0]);
+        localStorage.setItem('business-logo', logoData);
+        document.getElementById('flyerLogo').src = logoData;
+      }
+    });
+
+    // Featured images handling
+    const featuredInput = document.getElementById('featuredInput');
+    featuredInput.addEventListener('change', async (e)=>{
+      const files = Array.from(e.target.files);
+      const images = await Promise.all(files.map(f => fileToDataURL(f)));
+      const key = storageKey(DAYS[currentDayIndex]);
+      const existing = JSON.parse(localStorage.getItem(key)||'{}');
+      existing.featuredImages = (existing.featuredImages||[]).concat(images);
+      localStorage.setItem(key, JSON.stringify(existing));
+      renderFeaturedPreviews();
+      renderFlyerProducts();
+      featuredInput.value = '';
+    });
+    
+    // Quick upload handling
+    let quickUploadImages = [];
+    const MAX_IMAGES = 10;
+    const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+    
+    document.getElementById('quickUpload').addEventListener('change', async (e)=>{
+      const files = Array.from(e.target.files);
+      
+      // Check image limit
+      if(quickUploadImages.length + files.length > MAX_IMAGES){
+        showResponseModal('⚠️', 'Image Limit Reached', `You can only upload a maximum of ${MAX_IMAGES} images at once. Please remove some images first.`, 'warning');
+        e.target.value = '';
+        return;
+      }
+      
+      // Validate files
+      const validFiles = [];
+      const errors = [];
+      
+      for(const file of files){
+        if(file.size > MAX_FILE_SIZE){
+          errors.push(`${file.name} is too large (max 5MB)`);
+          continue;
+        }
+        if(!file.type.startsWith('image/')){
+          errors.push(`${file.name} is not an image`);
+          continue;
+        }
+        validFiles.push(file);
+      }
+      
+      if(errors.length > 0){
+        showResponseModal('❌', 'Upload Error', errors.join('<br>'), 'error');
+      }
+      
+      if(validFiles.length > 0){
+        const images = await Promise.all(validFiles.map(f => fileToDataURL(f)));
+        quickUploadImages = quickUploadImages.concat(images);
+        renderQuickUploadGrid();
+        showResponseModal('✅', 'Upload Success', `${validFiles.length} image(s) uploaded successfully!`, 'success');
+      }
+      
+      e.target.value = '';
+    });
+    
+    function renderQuickUploadGrid(){
+      const grid = document.getElementById('quickUploadGrid');
+      grid.innerHTML = '';
+      quickUploadImages.forEach((src,idx)=>{
+        const container = document.createElement('div');
+        container.className = 'quick-img';
+        container.innerHTML = `
+          <img src="${src}" />
+          <div class="quick-options">
+            <button class="quick-btn" onclick="makeImageFeatured('${src}', ${idx})">⭐ Featured</button>
+            <button class="quick-btn" onclick="addToProducts('${src}', ${idx})">📦 Product</button>
+            <button class="quick-btn" onclick="deleteQuickImage(${idx})">🗑️ Delete</button>
+          </div>
+        `;
+        grid.appendChild(container);
+      });
+    }
+    
+    function makeImageFeatured(src, idx){
+      const key = storageKey(DAYS[currentDayIndex]);
+      const existing = JSON.parse(localStorage.getItem(key)||'{}');
+      existing.featuredImages = (existing.featuredImages||[]).concat([src]);
+      localStorage.setItem(key, JSON.stringify(existing));
+      renderFeaturedPreviews();
+      renderFlyerProducts();
+      // Remove from quick upload
+      quickUploadImages.splice(idx, 1);
+      renderQuickUploadGrid();
+    }
+    
+    function addToProducts(src, idx){
+      const key = storageKey(DAYS[currentDayIndex]);
+      const existing = JSON.parse(localStorage.getItem(key)||'{}');
+      existing.images = (existing.images||[]).concat([src]);
+      localStorage.setItem(key, JSON.stringify(existing));
+      renderPreviews();
+      renderFlyerProducts();
+      incrementStat('images');
+      // Remove from quick upload
+      quickUploadImages.splice(idx, 1);
+      renderQuickUploadGrid();
+    }
+    
+    function deleteQuickImage(idx){
+      quickUploadImages.splice(idx, 1);
+      renderQuickUploadGrid();
+    }
+    
+    // Response modal functions
+    function showResponseModal(icon, title, message, type){
+      document.getElementById('responseIcon').textContent = icon;
+      document.getElementById('responseTitle').textContent = title;
+      document.getElementById('responseMessage').innerHTML = message;
+      
+      const modal = document.getElementById('responseModal');
+      const btn = modal.querySelector('.response-btn');
+      
+      if(type === 'error'){
+        btn.style.background = '#ef4444';
+      } else if(type === 'warning'){
+        btn.style.background = '#f59e0b';
+      } else {
+        btn.style.background = '#0b7a3b';
+      }
+      
+      modal.style.display = 'flex';
+    }
+    
+    function closeResponseModal(){
+      document.getElementById('responseModal').style.display = 'none';
+    }
+    
+    // Make closeResponseModal globally available
+    window.closeResponseModal = closeResponseModal;
+    
+    // Review modal functions
+    let selectedRating = 0;
+    
+    function openReviewModal(){
+      document.getElementById('reviewModal').style.display = 'flex';
+    }
+    
+    function closeReviewModal(){
+      document.getElementById('reviewModal').style.display = 'none';
+      document.getElementById('reviewName').value = '';
+      document.getElementById('reviewEmail').value = '';
+      document.getElementById('reviewPhone').value = '';
+      document.getElementById('reviewText').value = '';
+      selectedRating = 0;
+      document.querySelectorAll('.star').forEach(s => s.classList.remove('active'));
+    }
+    
+    function submitReview(e){
+      e.preventDefault();
+      const name = document.getElementById('reviewName').value;
+      const email = document.getElementById('reviewEmail').value;
+      const phone = document.getElementById('reviewPhone').value;
+      const text = document.getElementById('reviewText').value;
+      
+      if(selectedRating === 0){
+        alert('Please select a rating');
+        return;
+      }
+      
+      fetch('https://cyberspacetechhub.onrender.com/api/feedback', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          rating: selectedRating,
+          subject: `FlyerForge Review - ${selectedRating} Stars`,
+          message: text,
+          site: 'flyerforge'
+        })
+      }).catch(()=>{});
+      
+      showResponseModal('✅', 'Thank You!', `Thanks ${name}! Your ${selectedRating}-star review has been submitted.`, 'success');
+      closeReviewModal();
+    }
+    
+    // Star rating functionality
+    document.querySelectorAll('.star').forEach(star => {
+      star.addEventListener('click', ()=> {
+        selectedRating = parseInt(star.dataset.rating);
+        document.querySelectorAll('.star').forEach((s, idx) => {
+          s.classList.toggle('active', idx < selectedRating);
+        });
+      });
+    });
+    
+    // Drink modal functions
+    function openDrinkModal(){
+      document.getElementById('drinkModal').style.display = 'flex';
+    }
+    
+    function closeDrinkModal(){
+      document.getElementById('drinkModal').style.display = 'none';
+      document.getElementById('paymentDetails').style.display = 'none';
+    }
+    
+    function selectPayment(type){
+      const details = document.getElementById('paymentDetails');
+      details.style.display = 'block';
+      
+      if(type === 'bank'){
+        details.innerHTML = '<h4>Bank Transfer Details</h4><p><strong>Account:</strong> 1234567890<br><strong>Bank:</strong> Example Bank<br><strong>Name:</strong> Cyberspace Tech Hub</p>';
+      } else if(type === 'crypto'){
+        details.innerHTML = '<h4>Cryptocurrency</h4><p><strong>Bitcoin:</strong> 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa<br><strong>Ethereum:</strong> 0x742d35Cc6634C0532925a3b8D4C0d886E682184C</p>';
+      } else {
+        details.innerHTML = '<h4>Coming Soon!</h4><p>International payment options will be available soon. Stay tuned!</p>';
+      }
+    }
+    
+    // Make functions globally available
+    window.openReviewModal = openReviewModal;
+    window.closeReviewModal = closeReviewModal;
+    window.submitReview = submitReview;
+    window.openDrinkModal = openDrinkModal;
+    window.closeDrinkModal = closeDrinkModal;
+    window.selectPayment = selectPayment;
+    
+    // Testimonials functionality
+    let testimonials = [];
+    let currentTestimonial = 0;
+    
+    const fallbackTestimonials = [
+      {name: "Sarah Johnson", rating: 5, message: "FlyerForge is amazing! Created professional flyers in minutes."},
+      {name: "Mike Chen", rating: 5, message: "Love the templates and ease of use. Perfect for my business."},
+      {name: "Emma Davis", rating: 4, message: "Great tool with lots of features. Very user-friendly."},
+      {name: "Alex Rodriguez", rating: 5, message: "Best free flyer creator I've found. Highly recommend!"}
+    ];
+    
+    async function loadTestimonials(){
+      try{
+        const response = await fetch('https://cyberspacetechhub.onrender.com/api/feedback/flyerforge-testimonials');
+        const data = await response.json();
+        testimonials = data.length > 0 ? data : fallbackTestimonials;
+      } catch(error){
+        testimonials = fallbackTestimonials;
+      }
+      renderTestimonials();
+    }
+    
+    function renderTestimonials(){
+      const slider = document.getElementById('testimonialsSlider');
+      slider.innerHTML = '';
+      
+      testimonials.forEach(testimonial => {
+        const slide = document.createElement('div');
+        slide.style.cssText = 'min-width:100%;padding:20px;box-sizing:border-box;text-align:center';
+        slide.innerHTML = `
+          <div style="font-size:18px;margin-bottom:10px">${'⭐'.repeat(testimonial.rating)}</div>
+          <div style="font-size:14px;line-height:1.5;margin-bottom:10px;color:#333">"${testimonial.message}"</div>
+          <div style="font-weight:600;color:#0b7a3b;font-size:13px">- ${testimonial.name}</div>
+        `;
+        slider.appendChild(slide);
+      });
+      
+      // Auto-slide every 4 seconds
+      setInterval(nextTestimonial, 4000);
+    }
+    
+    function nextTestimonial(){
+      currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+      updateSlider();
+    }
+    
+    function prevTestimonial(){
+      currentTestimonial = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
+      updateSlider();
+    }
+    
+    function updateSlider(){
+      const slider = document.getElementById('testimonialsSlider');
+      slider.style.transform = `translateX(-${currentTestimonial * 100}%)`;
+    }
+    
+    window.nextTestimonial = nextTestimonial;
+    window.prevTestimonial = prevTestimonial;
+    
+    function renderFeaturedPreviews(){
+      const key = storageKey(DAYS[currentDayIndex]);
+      const data = JSON.parse(localStorage.getItem(key)||'{}');
+      const preview = document.getElementById('featuredPreview');
+      preview.innerHTML = '';
+      (data.featuredImages||[]).forEach((src,idx)=>{
+        const container = document.createElement('div');
+        container.style.cssText = 'position:relative;display:inline-block';
+        container.innerHTML = `
+          <img src="${src}" style="width:80px;height:80px;object-fit:cover;border-radius:8px;border:1px solid #ddd" />
+          <button onclick="removeFeaturedImage(${idx})" style="position:absolute;top:-5px;right:-5px;width:18px;height:18px;background:#ef4444;color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:10px">×</button>
+        `;
+        preview.appendChild(container);
+      });
+    }
+    
+    function removeFeaturedImage(idx){
+      const key = storageKey(DAYS[currentDayIndex]);
+      const data = JSON.parse(localStorage.getItem(key)||'{}');
+      data.featuredImages.splice(idx,1);
+      localStorage.setItem(key, JSON.stringify(data));
+      renderFeaturedPreviews();
+      renderFlyerProducts();
+    }
+    
+    // Image resizing functionality
+    function makeImageResizable(img){
+      img.addEventListener('click', (e)=>{
+        e.stopPropagation();
+        document.querySelectorAll('.product-row img, .flyer .logo').forEach(i => i.classList.remove('selected'));
+        img.classList.add('selected');
+      });
+      
+      img.addEventListener('mousedown', (e)=>{
+        if(e.target.classList.contains('resize-handle')) return;
+        startDrag(e);
+      });
+    }
+    
+
+    
+    // Layout functions
+    document.getElementById('scatterBtn').addEventListener('click', ()=>{
+      const images = document.querySelectorAll('.product-row .product-image');
+      images.forEach((img, idx) => {
+        img.style.left = Math.random() * 200 + 'px';
+        img.style.top = Math.random() * 150 + 50 + 'px';
+        img.style.transform = `rotate(${Math.random() * 20 - 10}deg)`;
+        saveImagePosition(img);
+      });
+    });
+    
+    document.getElementById('stackBtn').addEventListener('click', ()=>{
+      const images = document.querySelectorAll('.product-row .product-image');
+      images.forEach((img, idx) => {
+        img.style.left = 100 + (idx * 5) + 'px';
+        img.style.top = 120 + (idx * 5) + 'px';
+        img.style.zIndex = idx + 10;
+        img.style.transform = 'rotate(0deg)';
+        saveImagePosition(img);
+      });
+    });
+    
+    document.getElementById('circleBtn').addEventListener('click', ()=>{
+      const images = document.querySelectorAll('.product-row .product-image');
+      const centerX = 150, centerY = 100, radius = 60;
+      images.forEach((img, idx) => {
+        const angle = (idx / images.length) * 2 * Math.PI;
+        img.style.left = centerX + Math.cos(angle) * radius + 'px';
+        img.style.top = centerY + Math.sin(angle) * radius + 'px';
+        img.style.transform = 'rotate(0deg)';
+        saveImagePosition(img);
+      });
+    });
+    
+    document.getElementById('resetLayoutBtn').addEventListener('click', ()=>{
+      const key = storageKey(DAYS[currentDayIndex]);
+      const payload = JSON.parse(localStorage.getItem(key)||'{}');
+      delete payload.imagePositions;
+      localStorage.setItem(key, JSON.stringify(payload));
+      renderFlyerProducts();
+    });
+
+    // subline input
+    const sublineInput = document.getElementById('sublineInput');
+    sublineInput.addEventListener('input', ()=>{
+      const text = sublineInput.value || 'Step into October with fresh opportunities and new possibilities.<br> May this month bring growth, innovation, and joy to you!';
+      document.getElementById('flyerDesc').innerHTML = text;
+    });
+
+    // tags input
+    const tagsInput = document.getElementById('tagsInput');
+    tagsInput.addEventListener('input', ()=>{
+      const tags = tagsInput.value.split(',').map(t=>t.trim()).filter(t=>t);
+      const container = document.getElementById('flyerTags');
+      container.innerHTML = '';
+      tags.forEach(tag=>{
+        const span = document.createElement('span');
+        span.className = 'tag';
+        span.textContent = tag;
+        container.appendChild(span);
+      });
+    });
+
+    // footer inputs
+    const addressInput = document.getElementById('addressInput');
+    const contactInput = document.getElementById('contactInput');
+    const emailInput = document.getElementById('emailInput');
+    const websiteInput = document.getElementById('websiteInput');
+
+    addressInput.addEventListener('input', ()=>{
+      document.querySelector('#footerAddress span').textContent = addressInput.value || '123 Business St, City';
+    });
+    contactInput.addEventListener('input', ()=>{
+      document.querySelector('#footerContact span').textContent = contactInput.value || '+1 (555) 123-4567';
+    });
+    emailInput.addEventListener('input', ()=>{
+      document.querySelector('#footerEmail span').textContent = emailInput.value || 'info@business.com';
+    });
+    websiteInput.addEventListener('input', ()=>{
+      document.querySelector('#footerWebsite span').textContent = websiteInput.value || 'www.business.com';
+    });
+
+    // background selectors removed - using color pickers instead
+
+    // advert input
+    const advertInput = document.getElementById('advertInput');
+    advertInput.addEventListener('input', ()=>{ document.getElementById('flyerAdvert').innerHTML = advertInput.value || 'Advert message will appear here. E.g. We build modern websites — enquire now!'; });
+
+    // save & load
+    document.getElementById('saveBtn').addEventListener('click', ()=>{
+      const key = storageKey(DAYS[currentDayIndex]);
+      const payload = JSON.parse(localStorage.getItem(key)||'{}');
+      payload.headline = headlineInput.value;
+      payload.subline = sublineInput.value;
+      payload.tags = tagsInput.value;
+      payload.advert = advertInput.value;
+      payload.address = addressInput.value;
+      payload.contact = contactInput.value;
+      payload.email = emailInput.value;
+      payload.website = websiteInput.value;
+      payload.footerBg = document.getElementById('flyerFooter').style.background;
+      payload.addressBg = document.getElementById('footerAddress').style.background;
+      payload.contactBg = document.getElementById('footerContact').style.background;
+      payload.emailBg = document.getElementById('footerEmail').style.background;
+      payload.websiteBg = document.getElementById('footerWebsite').style.background;
+      payload.businessName = businessNameInput.value;
+      payload.businessType = document.getElementById('businessTypeSelect').value;
+      // Featured images are auto-saved
+      localStorage.setItem(key, JSON.stringify(payload));
+      alert('Saved for '+DAYS[currentDayIndex]);
+    });
+
+    function loadDayData(){
+      const key = storageKey(DAYS[currentDayIndex]);
+      const payload = JSON.parse(localStorage.getItem(key)||'{}');
+      
+      // load saved logo
+      const savedLogo = localStorage.getItem('business-logo');
+      if(savedLogo){
+        document.getElementById('flyerLogo').src = savedLogo;
+      }
+      
+      // populate fields
+      headlineInput.value = payload.headline || '';
+      sublineInput.value = payload.subline || '';
+      tagsInput.value = payload.tags || 'newday, newvideo';
+      advertInput.value = payload.advert || '';
+      addressInput.value = payload.address || '';
+      contactInput.value = payload.contact || '';
+      emailInput.value = payload.email || '';
+      websiteInput.value = payload.website || '';
+      businessNameInput.value = payload.businessName || '';
+      document.getElementById('businessTypeSelect').value = payload.businessType || '';
+      
+      // Make logo resizable
+      const logo = document.getElementById('flyerLogo');
+      makeImageResizable(logo);
+      
+      // Load featured images
+      renderFeaturedPreviews();
+      
+      updateHeadline();
+      
+      // update flyer content
+      const sublineText = payload.subline || 'Step into October with fresh opportunities and new possibilities.<br> May this month bring growth, innovation, and joy to you!';
+      document.getElementById('flyerDesc').innerHTML = sublineText;
+      
+      const tags = (payload.tags || 'newday, newvideo').split(',').map(t=>t.trim()).filter(t=>t);
+      const tagsContainer = document.getElementById('flyerTags');
+      tagsContainer.innerHTML = '';
+      tags.forEach(tag=>{
+        const span = document.createElement('span');
+        span.className = 'tag';
+        span.textContent = tag;
+        tagsContainer.appendChild(span);
+      });
+      
+      document.getElementById('flyerAdvert').innerHTML = payload.advert || 'Advert message will appear here. E.g. We build modern websites — enquire now!';
+      document.querySelector('#footerAddress span').textContent = payload.address || '123 Business St, City';
+      document.querySelector('#footerContact span').textContent = payload.contact || '+1 (555) 123-4567';
+      document.querySelector('#footerEmail span').textContent = payload.email || 'info@business.com';
+      document.querySelector('#footerWebsite span').textContent = payload.website || 'www.business.com';
+      const businessNameEl = document.getElementById('businessNameDisplay');
+      if(businessNameEl) businessNameEl.textContent = payload.businessName || 'Your Business Name';
+      
+      if(payload.footerBg) document.getElementById('flyerFooter').style.background = payload.footerBg;
+      if(payload.addressBg) document.getElementById('footerAddress').style.background = payload.addressBg;
+      if(payload.contactBg) document.getElementById('footerContact').style.background = payload.contactBg;
+      if(payload.emailBg) document.getElementById('footerEmail').style.background = payload.emailBg;
+      if(payload.websiteBg) document.getElementById('footerWebsite').style.background = payload.websiteBg;
+      
+      renderPreviews(); renderFlyerProducts();
+    }
+
+    // render products inside flyer with positioning
+    function renderFlyerProducts(){
+      const key = storageKey(DAYS[currentDayIndex]);
+      const payload = JSON.parse(localStorage.getItem(key)||'{}');
+      const container = document.getElementById('flyerProducts');
+      container.innerHTML = '';
+      
+      // Add featured images
+      (payload.featuredImages||[]).forEach((src,idx)=>{
+        const positions = payload.featuredPositions || {};
+        const pos = positions[idx] || {x: 50 + (idx * 30), y: 30, width: 120, height: 120, zIndex: 5};
+        addImageToContainer(src, 'featured-image', container, pos, 'featured-'+idx);
+      });
+      
+      // Add product images below featured image
+      (payload.images||[]).slice(0,6).forEach((src,idx)=>{
+        const positions = payload.imagePositions || {};
+        const pos = positions[idx] || {x: 20 + (idx * 80), y: 100, width: 80, height: 80, zIndex: 1};
+        addImageToContainer(src, 'product-image', container, pos, idx);
+      });
+    }
+    
+    function addImageToContainer(src, className, container, pos, index = null){
+      const img = document.createElement('img');
+      img.src = src;
+      img.className = className;
+      img.style.left = pos.x + 'px';
+      img.style.top = pos.y + 'px';
+      img.style.width = pos.width + 'px';
+      img.style.height = pos.height + 'px';
+      img.style.zIndex = pos.zIndex || 1;
+      if(index !== null) img.dataset.index = index;
+      
+      // Add interaction handlers
+      container.appendChild(img);
+      
+      makeImageResizable(img);
+      
+      // Add delete button
+      const deleteBtn = document.createElement('button');
+      deleteBtn.className = 'delete-btn';
+      deleteBtn.innerHTML = '×';
+      deleteBtn.onclick = (e) => {
+        e.stopPropagation();
+        if(className === 'featured-image'){
+          removeFeaturedImage(parseInt(index.split('-')[1]));
+        } else {
+          removeProductImage(index);
+        }
+      };
+      container.appendChild(deleteBtn);
+    }
+    
+    let isDragging = false;
+    let dragOffset = {x: 0, y: 0};
+    let selectedImage = null;
+    
+    function startDrag(e){
+      isDragging = true;
+      selectedImage = e.target;
+      const rect = e.target.getBoundingClientRect();
+      const containerRect = e.target.parentElement.getBoundingClientRect();
+      dragOffset.x = e.clientX - rect.left;
+      dragOffset.y = e.clientY - rect.top;
+      e.target.classList.add('dragging');
+      document.addEventListener('mousemove', drag);
+      document.addEventListener('mouseup', stopDrag);
+    }
+    
+    function drag(e){
+      if(!isDragging || !selectedImage) return;
+      const container = selectedImage.parentElement;
+      const containerRect = container.getBoundingClientRect();
+      const x = e.clientX - containerRect.left - dragOffset.x;
+      const y = e.clientY - containerRect.top - dragOffset.y;
+      selectedImage.style.left = Math.max(0, Math.min(x, container.offsetWidth - selectedImage.offsetWidth)) + 'px';
+      selectedImage.style.top = Math.max(0, Math.min(y, container.offsetHeight - selectedImage.offsetHeight)) + 'px';
+    }
+    
+    function stopDrag(){
+      if(selectedImage){
+        selectedImage.classList.remove('dragging');
+        saveImagePosition(selectedImage);
+      }
+      isDragging = false;
+      selectedImage = null;
+      document.removeEventListener('mousemove', drag);
+      document.removeEventListener('mouseup', stopDrag);
+    }
+    
+    function selectImage(e){
+      document.querySelectorAll('.product-row img').forEach(img => img.classList.remove('selected'));
+      e.target.classList.add('selected');
+    }
+    
+    function saveImagePosition(img){
+      if(!img.dataset.index) return;
+      const key = storageKey(DAYS[currentDayIndex]);
+      const payload = JSON.parse(localStorage.getItem(key)||'{}');
+      const index = img.dataset.index;
+      
+      if(index.startsWith('featured-')){
+        if(!payload.featuredPositions) payload.featuredPositions = {};
+        payload.featuredPositions[index.split('-')[1]] = {
+          x: parseInt(img.style.left),
+          y: parseInt(img.style.top),
+          width: img.offsetWidth,
+          height: img.offsetHeight,
+          zIndex: img.style.zIndex || 1
+        };
+      } else {
+        if(!payload.imagePositions) payload.imagePositions = {};
+        payload.imagePositions[index] = {
+          x: parseInt(img.style.left),
+          y: parseInt(img.style.top),
+          width: img.offsetWidth,
+          height: img.offsetHeight,
+          zIndex: img.style.zIndex || 1
+        };
+      }
+      localStorage.setItem(key, JSON.stringify(payload));
+    }
+    
+    function removeProductImage(idx){
+      const key = storageKey(DAYS[currentDayIndex]);
+      const data = JSON.parse(localStorage.getItem(key)||'{}');
+      data.images.splice(idx,1);
+      localStorage.setItem(key, JSON.stringify(data));
+      renderPreviews();
+      renderFlyerProducts();
+    }
+
+    // clear day images
+    document.getElementById('clearBtn').addEventListener('click', ()=>{
+      if(!confirm('Clear all images for '+DAYS[currentDayIndex]+'?')) return;
+      const key = storageKey(DAYS[currentDayIndex]);
+      const payload = JSON.parse(localStorage.getItem(key)||'{}');
+      payload.images = [];
+      localStorage.setItem(key, JSON.stringify(payload));
+      renderPreviews(); renderFlyerProducts();
+    });
+
+    // navigation
+    document.getElementById('prevDay').addEventListener('click', ()=> setDay((currentDayIndex+6)%7));
+    document.getElementById('nextDay').addEventListener('click', ()=> setDay((currentDayIndex+1)%7));
+    document.getElementById('todayBtn').addEventListener('click', ()=>{
+      const todayIndex = (new Date()).getDay(); // 0=Sun..6=Sat
+      // map to our MON-SUN index (Mon=0)
+      const map = [6,0,1,2,3,4,5];
+      setDay(map[todayIndex]);
+    });
+
+    // download
+    document.getElementById('downloadBtn').addEventListener('click', ()=>{
+      // hide controls if any, then capture
+      html2canvas(document.getElementById('flyer'), {useCORS:true, scale:2}).then(canvas=>{
+        const link = document.createElement('a');
+        link.download = `FlyerForge-${DAYS[currentDayIndex]}-${Date.now()}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        
+        // Increment stats
+        incrementStat('created');
+        
+        // Show success message
+        const btn = document.getElementById('downloadBtn');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '✓ Downloaded!';
+        btn.style.background = '#10b981';
+        setTimeout(()=>{
+          btn.innerHTML = originalText;
+          btn.style.background = 'linear-gradient(90deg,#0b7a3b,#1a7a3b)';
+        }, 2000);
+      });
+    });
+
+    // Popup functionality - define globally first
+    window.closePopup = function(){
+      document.getElementById('promoPopup').style.display = 'none';
+      localStorage.setItem('flyerforge-popup-shown', 'true');
+    };
+    
+    // Show popup on first visit
+    window.addEventListener('load', ()=>{
+      if(!localStorage.getItem('flyerforge-popup-shown')){
+        setTimeout(()=>{
+          document.getElementById('promoPopup').style.display = 'flex';
+        }, 1000);
+      }
+    });
+
+    // Interactive demo functions
+    function demoFillBusiness(){
+      document.getElementById('businessNameInput').value = 'TechCorp Solutions';
+      document.getElementById('businessTypeSelect').value = 'tech';
+      document.getElementById('headlineInput').value = 'Tech innovations this Monday — upgrade now!';
+      document.getElementById('sublineInput').value = 'Cutting-edge technology for modern solutions.<br>Innovation that drives your success forward!';
+      document.getElementById('tagsInput').value = 'innovation, digital, tech, solutions';
+      document.getElementById('advertInput').value = 'Upgrade your tech today — innovation awaits!';
+      document.getElementById('addressInput').value = '123 Tech Street, Silicon Valley';
+      document.getElementById('contactInput').value = '+1 (555) 123-TECH';
+      document.getElementById('emailInput').value = 'info@techcorp.com';
+      document.getElementById('websiteInput').value = 'www.techcorp.com';
+      
+      // Update flyer content
+      updateHeadline();
+      document.getElementById('flyerDesc').innerHTML = document.getElementById('sublineInput').value;
+      document.getElementById('flyerAdvert').innerHTML = document.getElementById('advertInput').value;
+      document.querySelector('#businessNameDisplay').textContent = 'TechCorp Solutions';
+      
+      // Update tags
+      const tags = 'innovation, digital, tech, solutions'.split(',').map(t=>t.trim());
+      const container = document.getElementById('flyerTags');
+      container.innerHTML = '';
+      tags.forEach(tag=>{
+        const span = document.createElement('span');
+        span.className = 'tag';
+        span.textContent = tag;
+        container.appendChild(span);
+      });
+      
+      updateProgress();
+    }
+    
+    function clearBusiness(){
+      document.getElementById('businessNameInput').value = '';
+      document.getElementById('businessTypeSelect').value = '';
+      document.getElementById('headlineInput').value = '';
+      document.getElementById('sublineInput').value = '';
+      document.getElementById('tagsInput').value = '';
+      document.getElementById('advertInput').value = '';
+      document.getElementById('addressInput').value = '';
+      document.getElementById('contactInput').value = '';
+      document.getElementById('emailInput').value = '';
+      document.getElementById('websiteInput').value = '';
+      updateProgress();
+    }
+    
+    function updateProgress(){
+      const fields = [
+        document.getElementById('businessNameInput').value,
+        document.getElementById('businessTypeSelect').value,
+        document.getElementById('headlineInput').value,
+        document.getElementById('sublineInput').value,
+        document.getElementById('tagsInput').value
+      ];
+      
+      const filled = fields.filter(field => field.trim() !== '').length;
+      const percentage = Math.round((filled / fields.length) * 100);
+      
+      const progressBar = document.getElementById('progressBar');
+      const progressText = document.getElementById('progressText');
+      
+      if(progressBar) progressBar.style.width = percentage + '%';
+      if(progressText) progressText.textContent = percentage + '% Complete';
+      
+      // Update stats
+      updateStats();
+    }
+    
+    function updateStats(){
+      const stats = JSON.parse(localStorage.getItem('flyerforge-stats') || '{"created":0,"images":0,"days":1}');
+      document.getElementById('flyersCreated').textContent = stats.created || 0;
+      document.getElementById('imagesUploaded').textContent = stats.images || 0;
+      document.getElementById('daysActive').textContent = stats.days || 1;
+    }
+    
+    function incrementStat(type){
+      const stats = JSON.parse(localStorage.getItem('flyerforge-stats') || '{"created":0,"images":0,"days":1}');
+      stats[type] = (stats[type] || 0) + 1;
+      localStorage.setItem('flyerforge-stats', JSON.stringify(stats));
+      updateStats();
+    }
+    
+    function shareApp(){
+      if(navigator.share){
+        navigator.share({
+          title: 'FlyerForge - Free Professional Flyer Creator',
+          text: 'Create stunning marketing flyers for free with FlyerForge!',
+          url: window.location.href
+        });
+      } else {
+        navigator.clipboard.writeText(window.location.href);
+        alert('Link copied to clipboard!');
+      }
+    }
+    
+    // Preview functionality
+    document.getElementById('previewBtn').addEventListener('click', ()=>{
+      const flyer = document.getElementById('flyer');
+      if(flyer.style.transform === 'scale(1.2)'){
+        flyer.style.transform = 'scale(1)';
+        document.getElementById('previewBtn').textContent = '👁️ Preview';
+      } else {
+        flyer.style.transform = 'scale(1.2)';
+        flyer.style.transition = 'transform 0.3s ease';
+        document.getElementById('previewBtn').textContent = '← Normal';
+      }
+    });
+    
+    // Template system
+    const designTemplates = [
+      {
+        id: 'modern-tech',
+        name: 'Modern Tech',
+        desc: 'Clean, professional design for tech companies',
+        colors: ['#6366f1', '#8b5cf6'],
+        headline: 'Innovation Starts Here',
+        subline: 'Cutting-edge solutions for modern businesses.<br>Transform your ideas into reality.',
+        tags: 'innovation, technology, modern, solutions',
+        advert: 'Ready to innovate? Contact us today for cutting-edge solutions!'
+      },
+      {
+        id: 'nature-green',
+        name: 'Nature Green',
+        desc: 'Eco-friendly design for sustainable businesses',
+        colors: ['#10b981', '#059669'],
+        headline: 'Go Green Today',
+        subline: 'Sustainable solutions for a better tomorrow.<br>Join the eco-revolution now.',
+        tags: 'eco, green, sustainable, nature',
+        advert: 'Choose sustainability. Choose the future. Go green with us!'
+      },
+      {
+        id: 'sunset-orange',
+        name: 'Sunset Orange',
+        desc: 'Warm, energetic design for creative businesses',
+        colors: ['#f59e0b', '#d97706'],
+        headline: 'Ignite Your Creativity',
+        subline: 'Bold ideas deserve bold execution.<br>Let your creativity shine bright.',
+        tags: 'creative, bold, energy, inspiration',
+        advert: 'Unleash your potential! Creative solutions that make a difference.'
+      },
+      {
+        id: 'ocean-blue',
+        name: 'Ocean Blue',
+        desc: 'Trustworthy design for professional services',
+        colors: ['#3b82f6', '#1d4ed8'],
+        headline: 'Trust & Excellence',
+        subline: 'Professional services you can depend on.<br>Quality that speaks for itself.',
+        tags: 'professional, trust, quality, excellence',
+        advert: 'Experience the difference. Professional service, exceptional results.'
+      },
+      {
+        id: 'royal-purple',
+        name: 'Royal Purple',
+        desc: 'Luxury design for premium brands',
+        colors: ['#8b5cf6', '#7c3aed'],
+        headline: 'Luxury Redefined',
+        subline: 'Premium quality meets exceptional service.<br>Experience true luxury.',
+        tags: 'luxury, premium, exclusive, elegant',
+        advert: 'Indulge in luxury. Premium products, premium experience.'
+      },
+      {
+        id: 'fire-red',
+        name: 'Fire Red',
+        desc: 'Bold design for dynamic businesses',
+        colors: ['#ef4444', '#dc2626'],
+        headline: 'Ignite Success',
+        subline: 'Dynamic solutions for ambitious goals.<br>Fuel your business growth.',
+        tags: 'dynamic, success, growth, ambitious',
+        advert: 'Ready to dominate? Powerful solutions for powerful results!'
+      }
+    ];
+    
+    function openTemplateModal(){
+      document.getElementById('templateModal').style.display = 'flex';
+      renderTemplates();
+    }
+    
+    function closeTemplateModal(){
+      document.getElementById('templateModal').style.display = 'none';
+    }
+    
+    function renderTemplates(){
+      const grid = document.getElementById('templateGrid');
+      grid.innerHTML = `
+        <div style="text-align:center;padding:40px;grid-column:1/-1">
+          <h3>🎨 Professional Design Templates</h3>
+          <p style="color:#666;margin:20px 0">View our enhanced template gallery with unique designs and layouts</p>
+          <button onclick="window.open('templates.html','_blank')" style="background:#8b5cf6;color:#fff;padding:15px 30px;border:none;border-radius:10px;font-size:16px;font-weight:600;cursor:pointer;margin:10px">
+            🚀 Browse Template Gallery
+          </button>
+          <div style="margin-top:30px;padding:20px;background:#f8f9fa;border-radius:8px">
+            <h4>Quick Templates:</h4>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:15px">
+              ${designTemplates.map(template => `
+                <div class="template-card" onclick="applyTemplate(${JSON.stringify(template).replace(/"/g, '&quot;')})" style="padding:15px;border:1px solid #ddd;border-radius:8px;cursor:pointer;text-align:left">
+                  <div style="background:linear-gradient(135deg,${template.colors[0]},${template.colors[1]});height:60px;border-radius:6px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:12px">${template.name}</div>
+                  <div style="font-weight:600;margin-bottom:5px">${template.name}</div>
+                  <div style="font-size:11px;color:#666">${template.desc}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+    
+    function applyTemplate(template){
+      // Apply colors
+      document.getElementById('headlineColorPicker').value = template.colors[0];
+      document.getElementById('headlineColor1').setAttribute('stop-color', template.colors[0]);
+      document.getElementById('headlineColor2').setAttribute('stop-color', template.colors[1]);
+      document.getElementById('footerColorPicker').value = template.colors[0];
+      document.getElementById('flyerFooter').style.background = `linear-gradient(90deg,${template.colors[0]},${template.colors[1]})`;
+      
+      // Apply content
+      document.getElementById('headlineInput').value = template.headline;
+      document.getElementById('sublineInput').value = template.subline;
+      document.getElementById('tagsInput').value = template.tags;
+      document.getElementById('advertInput').value = template.advert;
+      
+      // Apply template-specific styling
+      const flyer = document.getElementById('flyer');
+      const flyerContent = document.querySelector('.flyer-content');
+      
+      // Reset any previous template styles
+      flyer.className = 'flyer';
+      flyerContent.style.cssText = 'position:relative;z-index:1';
+      
+      // Apply template-specific designs
+      if(template.id === 'modern-tech'){
+        flyer.style.background = 'linear-gradient(135deg,#6366f1,#8b5cf6)';
+        flyer.style.color = '#fff';
+        document.getElementById('flyerDesc').style.color = 'rgba(255,255,255,0.9)';
+        document.getElementById('flyerAdvert').style.background = 'rgba(255,255,255,0.1)';
+        document.getElementById('flyerAdvert').style.color = '#fff';
+        document.getElementById('flyerAdvert').style.border = '1px solid rgba(255,255,255,0.2)';
+      } else if(template.id === 'nature-green'){
+        flyer.style.background = 'linear-gradient(135deg,#10b981,#059669)';
+        flyer.style.color = '#fff';
+        flyerContent.innerHTML += '<div style="position:absolute;top:20px;right:20px;font-size:40px;opacity:0.3;z-index:0">🌿</div>';
+        document.getElementById('flyerAdvert').style.background = 'rgba(255,255,255,0.9)';
+        document.getElementById('flyerAdvert').style.color = '#10b981';
+      } else if(template.id === 'sunset-orange'){
+        flyer.style.background = 'linear-gradient(135deg,#f59e0b,#d97706)';
+        flyer.style.color = '#fff';
+        flyerContent.innerHTML += '<div style="position:absolute;top:0;right:0;width:100px;height:100px;background:radial-gradient(circle,rgba(255,255,255,0.2),transparent);border-radius:50%;z-index:0"></div>';
+        document.getElementById('svgHeadline').style.textShadow = '2px 2px 4px rgba(0,0,0,0.3)';
+      } else if(template.id === 'ocean-blue'){
+        flyer.style.background = 'linear-gradient(135deg,#3b82f6,#1d4ed8)';
+        flyer.style.color = '#fff';
+        flyerContent.innerHTML += '<div style="position:absolute;bottom:0;left:0;width:100%;height:60px;background:url(\'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><path d="M0,10 Q25,0 50,10 T100,10 V20 H0 Z" fill="rgba(255,255,255,0.1)"/></svg>\') repeat-x;z-index:0"></div>';
+        document.getElementById('svgHeadline').style.letterSpacing = '1px';
+      } else if(template.id === 'royal-purple'){
+        flyer.style.background = 'linear-gradient(135deg,#8b5cf6,#7c3aed)';
+        flyer.style.color = '#fff';
+        flyerContent.innerHTML += '<div style="position:absolute;top:20px;right:20px;font-size:30px;opacity:0.4;z-index:0">👑</div>';
+        document.getElementById('svgHeadline').style.fontWeight = '300';
+        document.getElementById('svgHeadline').style.letterSpacing = '2px';
+      } else if(template.id === 'fire-red'){
+        flyer.style.background = 'linear-gradient(135deg,#ef4444,#dc2626)';
+        flyer.style.color = '#fff';
+        flyerContent.innerHTML += '<div style="position:absolute;top:-50px;right:-50px;width:150px;height:150px;background:radial-gradient(circle,rgba(255,255,255,0.1),transparent);border-radius:50%;z-index:0"></div>';
+        document.getElementById('svgHeadline').style.fontWeight = '900';
+        document.getElementById('svgHeadline').style.textTransform = 'uppercase';
+      } else {
+        // Default white background
+        flyer.style.background = '#ffffff';
+        flyer.style.color = '#111';
+        document.getElementById('flyerDesc').style.color = '#666';
+        document.getElementById('flyerAdvert').style.background = 'linear-gradient(135deg,#fff7e6,#fef3e2)';
+        document.getElementById('flyerAdvert').style.color = '#3a2e00';
+      }
+      
+      // Update flyer content
+      updateHeadline();
+      document.getElementById('flyerDesc').innerHTML = template.subline;
+      document.getElementById('flyerAdvert').innerHTML = template.advert;
+      
+      // Update tags
+      const tags = template.tags.split(',').map(t=>t.trim());
+      const container = document.getElementById('flyerTags');
+      container.innerHTML = '';
+      tags.forEach(tag=>{
+        const span = document.createElement('span');
+        span.className = 'tag';
+        span.textContent = tag;
+        container.appendChild(span);
+      });
+      
+      updateProgress();
+      closeTemplateModal();
+      
+      // Success feedback
+      const btn = document.getElementById('templatesBtn');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '✓ Applied!';
+      setTimeout(()=>{
+        btn.innerHTML = originalText;
+      }, 2000);
+    }
+    
+    function startFromScratch(){
+      if(confirm('This will clear all current content. Continue?')){
+        // Clear all fields
+        document.getElementById('businessNameInput').value = '';
+        document.getElementById('businessTypeSelect').value = '';
+        document.getElementById('headlineInput').value = '';
+        document.getElementById('sublineInput').value = '';
+        document.getElementById('tagsInput').value = '';
+        document.getElementById('advertInput').value = '';
+        document.getElementById('addressInput').value = '';
+        document.getElementById('contactInput').value = '';
+        document.getElementById('emailInput').value = '';
+        document.getElementById('websiteInput').value = '';
+        
+        // Reset colors to default
+        document.getElementById('headlineColorPicker').value = '#0b7a3b';
+        document.getElementById('headlineColor1').setAttribute('stop-color', '#0b7a3b');
+        document.getElementById('headlineColor2').setAttribute('stop-color', '#1a7a3b');
+        document.getElementById('footerColorPicker').value = '#0b7a3b';
+        document.getElementById('flyerFooter').style.background = 'linear-gradient(90deg,#0b7a3b,#1a7a3b)';
+        
+        // Reset flyer content
+        document.getElementById('svgHeadline').textContent = 'YOUR HEADLINE';
+        document.getElementById('flyerDesc').innerHTML = 'Your description goes here.<br>Add your message to engage customers.';
+        document.getElementById('flyerAdvert').innerHTML = 'Your advertisement message here.';
+        document.getElementById('flyerTags').innerHTML = '';
+        document.getElementById('businessNameDisplay').textContent = 'Your Business Name';
+        
+        // Clear images
+        document.getElementById('flyerProducts').innerHTML = '';
+        
+        updateProgress();
+        closeTemplateModal();
+        
+        alert('✨ Blank canvas ready! Start creating your unique design.');
+      }
+    }
+    
+    // Event listeners
+    document.getElementById('templatesBtn').addEventListener('click', openTemplateModal);
+    document.getElementById('scratchBtn').addEventListener('click', startFromScratch);
+    
+    // Add progress tracking to inputs
+    ['businessNameInput', 'businessTypeSelect', 'headlineInput', 'sublineInput', 'tagsInput'].forEach(id => {
+      const element = document.getElementById(id);
+      if(element) {
+        element.addEventListener('input', updateProgress);
+        element.addEventListener('change', updateProgress);
+      }
+    });
+
+    // Check for template from URL or localStorage
+    function loadSelectedTemplate(){
+      const storedTemplate = localStorage.getItem('selectedTemplate');
+      
+      if(storedTemplate){
+        try{
+          const template = JSON.parse(storedTemplate);
+          applyTemplate(template);
+          localStorage.removeItem('selectedTemplate');
+          // Clean URL
+          window.history.replaceState({}, document.title, window.location.pathname);
+        } catch(e){}
+      }
+    }
+    
+    // Hide loader and load initial
+    window.addEventListener('load', ()=>{
+      setTimeout(()=>{
+        document.getElementById('pageLoader').style.display = 'none';
+      }, 1500);
+    });
+    
+    setDay(0);
+    updateProgress();
+    updateStats();
+    loadSelectedTemplate();
+    loadTestimonials();
+    
+    // Welcome message for first-time users
+    if(!localStorage.getItem('flyerforge-welcomed')){
+      setTimeout(()=>{
+        alert('🎉 Welcome to FlyerForge!\n\n• 100% Free forever\n• No registration required\n• Professional quality flyers\n• Try the "Demo Business" button to get started!\n\nCreated by Cyberspace Tech Hub');
+        localStorage.setItem('flyerforge-welcomed', 'true');
+      }, 2000);
+    }
+  </script>
+</body>
+</html>

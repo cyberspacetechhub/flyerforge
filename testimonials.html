@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FlyerForge Testimonials - Customer Reviews</title>
+  <style>
+    body{margin:0;font-family:Inter,system-ui;background:#f7f7f8;padding:20px}
+    .container{max-width:1000px;margin:0 auto}
+    h1{text-align:center;color:#0b7a3b;margin-bottom:30px}
+    .slider{position:relative;overflow:hidden;border-radius:12px;background:#fff;box-shadow:0 6px 18px rgba(16,24,40,0.06)}
+    .slides{display:flex;transition:transform 0.5s ease}
+    .slide{min-width:100%;padding:40px;text-align:center;box-sizing:border-box}
+    .stars{font-size:24px;margin-bottom:15px}
+    .review{font-size:18px;line-height:1.6;margin-bottom:20px;color:#333}
+    .author{font-weight:600;color:#0b7a3b}
+    .nav{text-align:center;margin-top:20px}
+    .nav button{background:#0b7a3b;color:#fff;border:none;padding:10px 20px;margin:0 5px;border-radius:6px;cursor:pointer}
+    .nav button:hover{background:#1a7a3b}
+    .dots{text-align:center;margin-top:15px}
+    .dot{width:12px;height:12px;border-radius:50%;background:#ddd;display:inline-block;margin:0 5px;cursor:pointer;transition:background 0.3s}
+    .dot.active{background:#0b7a3b}
+    .back-btn{position:fixed;top:20px;left:20px;background:#0b7a3b;color:#fff;padding:10px 15px;border:none;border-radius:6px;cursor:pointer;text-decoration:none}
+  </style>
+</head>
+<body>
+  <a href="dailygenerator.html" class="back-btn">← Back to FlyerForge</a>
+  
+  <div class="container">
+    <h1>💬 What Our Customers Say</h1>
+    
+    <div class="slider">
+      <div class="slides" id="slides"></div>
+    </div>
+    
+    <div class="nav">
+      <button onclick="prevSlide()">← Previous</button>
+      <button onclick="nextSlide()">Next →</button>
+    </div>
+    
+    <div class="dots" id="dots"></div>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    let testimonials = [];
+    
+    // Fallback testimonials
+    const fallbackTestimonials = [
+      {name: "Sarah Johnson", rating: 5, message: "FlyerForge is amazing! Created professional flyers in minutes. Highly recommend!"},
+      {name: "Mike Chen", rating: 5, message: "Love the templates and ease of use. Perfect for my small business marketing."},
+      {name: "Emma Davis", rating: 4, message: "Great tool with lots of features. The image editing is particularly useful."},
+      {name: "Alex Rodriguez", rating: 5, message: "Best free flyer creator I've found. Professional results every time."},
+      {name: "Lisa Thompson", rating: 5, message: "Saved me hours of design work. The templates are beautiful and customizable."}
+    ];
+    
+    async function loadTestimonials(){
+      try{
+        const response = await fetch('https://cyberspacetechhub.onrender.com/api/feedback/flyerforge-testimonials');
+        const data = await response.json();
+        testimonials = data.length > 0 ? data : fallbackTestimonials;
+      } catch(error){
+        testimonials = fallbackTestimonials;
+      }
+      renderSlides();
+    }
+    
+    function renderSlides(){
+      const slidesContainer = document.getElementById('slides');
+      const dotsContainer = document.getElementById('dots');
+      
+      slidesContainer.innerHTML = '';
+      dotsContainer.innerHTML = '';
+      
+      testimonials.forEach((testimonial, index) => {
+        // Create slide
+        const slide = document.createElement('div');
+        slide.className = 'slide';
+        slide.innerHTML = `
+          <div class="stars">${'⭐'.repeat(testimonial.rating)}</div>
+          <div class="review">"${testimonial.message}"</div>
+          <div class="author">- ${testimonial.name}</div>
+        `;
+        slidesContainer.appendChild(slide);
+        
+        // Create dot
+        const dot = document.createElement('div');
+        dot.className = 'dot';
+        if(index === 0) dot.classList.add('active');
+        dot.onclick = () => goToSlide(index);
+        dotsContainer.appendChild(dot);
+      });
+    }
+    
+    function goToSlide(index){
+      currentSlide = index;
+      const slidesContainer = document.getElementById('slides');
+      slidesContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
+      
+      document.querySelectorAll('.dot').forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentSlide);
+      });
+    }
+    
+    function nextSlide(){
+      currentSlide = (currentSlide + 1) % testimonials.length;
+      goToSlide(currentSlide);
+    }
+    
+    function prevSlide(){
+      currentSlide = (currentSlide - 1 + testimonials.length) % testimonials.length;
+      goToSlide(currentSlide);
+    }
+    
+    // Auto-slide every 5 seconds
+    setInterval(nextSlide, 5000);
+    
+    // Load testimonials on page load
+    loadTestimonials();
+  </script>
+</body>
+</html>

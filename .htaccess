@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteRule ^home$ dailygenerator.html [L]
+RewriteRule ^templates$ templates.html [L]

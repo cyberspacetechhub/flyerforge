@@ -1,0 +1,7 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/dailygenerator.html" },
+    { "source": "/home", "destination": "/dailygenerator.html" },
+    { "source": "/templates", "destination": "/templates.html" }
+  ]
+}
