@@ -518,6 +518,7 @@
           <button id="generateBtn">Generate Headline</button>
           <button id="saveBtn">Save Day Data</button>
           <button id="clearBtn">Clear Day Images</button>
+          <a href="ai-generator.html" style="background:#667eea;color:#fff;border:none;padding:8px 12px;border-radius:6px;text-decoration:none;font-size:12px">🤖 Ask Cyberspace AI</a>
         </div>
         
         <div style="margin-top:8px">
@@ -605,6 +606,10 @@
         <div style="background:#f8f9fa;padding:15px;border-radius:8px;margin:15px 0;text-align:center">
           <h4 style="margin:0 0 10px 0;color:#0b7a3b">📸 Quick Image Upload</h4>
           <input type="file" id="quickUpload" accept="image/*" multiple style="margin-bottom:10px" />
+          <div style="margin-bottom:10px">
+            <label style="font-size:12px;color:#0b7a3b;font-weight:600">🖼️ Background Image:</label>
+            <input type="file" id="backgroundUpload" accept="image/*" style="font-size:11px;margin-left:5px" />
+          </div>
           <div style="font-size:12px;color:#666;margin-bottom:10px">💡 <strong>Tip:</strong> Click any image in the flyer to resize it. Drag images to reposition them.</div>
           <div style="font-size:11px;color:#999;margin-bottom:10px">Max 10 images, 5MB each</div>
           <div id="quickUploadGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-top:10px"></div>
@@ -1364,6 +1369,268 @@
       }
     }
     
+    // Background upload handling
+    document.getElementById('backgroundUpload').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          const flyer = document.getElementById('flyer');
+          flyer.style.backgroundImage = `url(${event.target.result})`;
+          flyer.style.backgroundSize = 'cover';
+          flyer.style.backgroundPosition = 'center';
+          flyer.dataset.hasBackground = 'true';
+          showBackgroundControls();
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    function showBackgroundControls() {
+      const flyer = document.getElementById('flyer');
+      let controls = document.getElementById('backgroundControls');
+      
+      if (!controls) {
+        controls = document.createElement('div');
+        controls.id = 'backgroundControls';
+        controls.style.cssText = 'position: absolute; top: 10px; right: 10px; display: flex; gap: 5px; z-index: 100;';
+        
+        const deleteBtn = document.createElement('button');
+        deleteBtn.innerHTML = '🗑️';
+        deleteBtn.style.cssText = 'background: rgba(239,68,68,0.9); color: white; border: none; padding: 8px; border-radius: 50%; cursor: pointer; font-size: 12px;';
+        deleteBtn.onclick = removeBackground;
+        
+        const resizeBtn = document.createElement('button');
+        resizeBtn.innerHTML = '🔧';
+        resizeBtn.style.cssText = 'background: rgba(59,130,246,0.9); color: white; border: none; padding: 8px; border-radius: 50%; cursor: pointer; font-size: 12px;';
+        resizeBtn.onclick = () => showBackgroundResizeModal();
+        
+        const cropBtn = document.createElement('button');
+        cropBtn.innerHTML = '✂️';
+        cropBtn.style.cssText = 'background: rgba(245,158,11,0.9); color: white; border: none; padding: 8px; border-radius: 50%; cursor: pointer; font-size: 12px;';
+        cropBtn.onclick = () => cropBackground();
+        
+        controls.appendChild(deleteBtn);
+        controls.appendChild(resizeBtn);
+        controls.appendChild(cropBtn);
+        flyer.appendChild(controls);
+      }
+      
+      controls.style.display = 'flex';
+    }
+
+    function removeBackground() {
+      const flyer = document.getElementById('flyer');
+      flyer.style.backgroundImage = 'none';
+      flyer.dataset.hasBackground = 'false';
+      const controls = document.getElementById('backgroundControls');
+      if (controls) controls.style.display = 'none';
+    }
+
+    function showBackgroundResizeModal() {
+      const modal = document.createElement('div');
+      modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 1000;';
+      
+      const content = document.createElement('div');
+      content.style.cssText = 'background: white; padding: 20px; border-radius: 12px; text-align: center;';
+      
+      content.innerHTML = `
+        <h3>Background Settings</h3>
+        <div style="margin: 15px 0;">
+          <label>Size:</label><br>
+          <button onclick="setBackgroundSize('cover')" style="margin: 5px; padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px; cursor: pointer;">Cover</button>
+          <button onclick="setBackgroundSize('contain')" style="margin: 5px; padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px; cursor: pointer;">Contain</button>
+          <button onclick="setBackgroundSize('100% 100%')" style="margin: 5px; padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px; cursor: pointer;">Stretch</button>
+        </div>
+        <div style="margin: 15px 0;">
+          <label>Position:</label><br>
+          <button onclick="setBackgroundPosition('center')" style="margin: 5px; padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px; cursor: pointer;">Center</button>
+          <button onclick="setBackgroundPosition('top')" style="margin: 5px; padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px; cursor: pointer;">Top</button>
+          <button onclick="setBackgroundPosition('bottom')" style="margin: 5px; padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px; cursor: pointer;">Bottom</button>
+        </div>
+        <button onclick="closeBackgroundModal()" style="background: #0b7a3b; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer;">Done</button>
+      `;
+      
+      modal.appendChild(content);
+      document.body.appendChild(modal);
+      
+      window.setBackgroundSize = (size) => {
+        document.getElementById('flyer').style.backgroundSize = size;
+      };
+      
+      window.setBackgroundPosition = (position) => {
+        document.getElementById('flyer').style.backgroundPosition = position;
+      };
+      
+      window.closeBackgroundModal = () => {
+        document.body.removeChild(modal);
+        delete window.setBackgroundSize;
+        delete window.setBackgroundPosition;
+        delete window.closeBackgroundModal;
+      };
+    }
+
+    function cropBackground() {
+      const flyer = document.getElementById('flyer');
+      const currentBg = flyer.style.backgroundImage;
+      if (currentBg && currentBg !== 'none') {
+        showCropModal(currentBg.slice(5, -2));
+      }
+    }
+
+    function showCropModal(imageSrc) {
+      const modal = document.createElement('div');
+      modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; z-index: 1001;';
+      
+      const content = document.createElement('div');
+      content.style.cssText = 'background: white; padding: 20px; border-radius: 12px; text-align: center; max-width: 90%; max-height: 90%;';
+      
+      content.innerHTML = `
+        <h3>Crop Background Image</h3>
+        <div style="position: relative; display: inline-block; margin: 20px 0;">
+          <img id="cropImage" src="${imageSrc}" style="max-width: 400px; max-height: 300px; display: block;" />
+          <div id="cropBox" style="position: absolute; border: 2px dashed #0b7a3b; background: rgba(11,122,59,0.1); cursor: move; display: none;"></div>
+        </div>
+        <div style="margin: 15px 0;">
+          <button onclick="startCrop()" style="background: #0b7a3b; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; margin: 5px;">Start Crop</button>
+          <button onclick="applyCrop()" style="background: #10b981; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; margin: 5px;">Apply</button>
+          <button onclick="closeCropModal()" style="background: #6c757d; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; margin: 5px;">Cancel</button>
+        </div>
+      `;
+      
+      modal.appendChild(content);
+      document.body.appendChild(modal);
+      
+      let cropping = false;
+      let startX, startY, cropBox;
+      
+      window.startCrop = () => {
+        cropping = true;
+        cropBox = document.getElementById('cropBox');
+        const img = document.getElementById('cropImage');
+        
+        img.onmousedown = (e) => {
+          if (!cropping) return;
+          const rect = img.getBoundingClientRect();
+          startX = e.clientX - rect.left;
+          startY = e.clientY - rect.top;
+          cropBox.style.left = startX + 'px';
+          cropBox.style.top = startY + 'px';
+          cropBox.style.width = '0px';
+          cropBox.style.height = '0px';
+          cropBox.style.display = 'block';
+        };
+        
+        img.onmousemove = (e) => {
+          if (!cropping || cropBox.style.display === 'none') return;
+          const rect = img.getBoundingClientRect();
+          const currentX = e.clientX - rect.left;
+          const currentY = e.clientY - rect.top;
+          cropBox.style.width = Math.abs(currentX - startX) + 'px';
+          cropBox.style.height = Math.abs(currentY - startY) + 'px';
+          cropBox.style.left = Math.min(currentX, startX) + 'px';
+          cropBox.style.top = Math.min(currentY, startY) + 'px';
+        };
+      };
+      
+      window.applyCrop = () => {
+        const img = document.getElementById('cropImage');
+        const box = document.getElementById('cropBox');
+        if (box.style.display === 'none') return;
+        
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        const scaleX = img.naturalWidth / img.offsetWidth;
+        const scaleY = img.naturalHeight / img.offsetHeight;
+        
+        const cropX = parseInt(box.style.left) * scaleX;
+        const cropY = parseInt(box.style.top) * scaleY;
+        const cropWidth = parseInt(box.style.width) * scaleX;
+        const cropHeight = parseInt(box.style.height) * scaleY;
+        
+        canvas.width = cropWidth;
+        canvas.height = cropHeight;
+        
+        ctx.drawImage(img, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
+        
+        const croppedDataUrl = canvas.toDataURL();
+        const flyer = document.getElementById('flyer');
+        flyer.style.backgroundImage = `url(${croppedDataUrl})`;
+        
+        closeCropModal();
+      };
+      
+      window.closeCropModal = () => {
+        document.body.removeChild(modal);
+        delete window.startCrop;
+        delete window.applyCrop;
+        delete window.closeCropModal;
+      };
+    }
+
+    // Click handler for flyer background
+    document.getElementById('flyer').addEventListener('click', (e) => {
+      if (e.target.id === 'flyer' && e.target.dataset.hasBackground === 'true') {
+        showBackgroundControls();
+      }
+    });
+
+    // Image resize functionality
+    function showImageResizeModal(img) {
+      const modal = document.createElement('div');
+      modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 1000;';
+      
+      const content = document.createElement('div');
+      content.style.cssText = 'background: white; padding: 20px; border-radius: 12px; text-align: center;';
+      
+      const slider = document.createElement('input');
+      slider.type = 'range';
+      slider.min = '50';
+      slider.max = '200';
+      slider.value = '100';
+      slider.style.cssText = 'width: 200px; margin: 10px;';
+      
+      const currentSize = parseInt(img.style.width) || 100;
+      slider.value = currentSize;
+      
+      content.innerHTML = `
+        <h3>Resize Image</h3>
+        <p>Size: <span id="sizeValue">${currentSize}px</span></p>
+      `;
+      content.appendChild(slider);
+      
+      const buttons = document.createElement('div');
+      buttons.style.cssText = 'margin-top: 15px; display: flex; gap: 10px; justify-content: center;';
+      
+      const resetBtn = document.createElement('button');
+      resetBtn.textContent = 'Reset';
+      resetBtn.style.cssText = 'padding: 8px 16px; background: #6c757d; color: white; border: none; border-radius: 6px; cursor: pointer;';
+      resetBtn.onclick = () => {
+        img.style.width = '100px';
+        img.style.height = '100px';
+        slider.value = '100';
+        document.getElementById('sizeValue').textContent = '100px';
+      };
+      
+      const closeBtn = document.createElement('button');
+      closeBtn.textContent = 'Done';
+      closeBtn.style.cssText = 'padding: 8px 16px; background: #0b7a3b; color: white; border: none; border-radius: 6px; cursor: pointer;';
+      closeBtn.onclick = () => document.body.removeChild(modal);
+      
+      slider.oninput = () => {
+        img.style.width = slider.value + 'px';
+        img.style.height = slider.value + 'px';
+        document.getElementById('sizeValue').textContent = slider.value + 'px';
+      };
+      
+      buttons.appendChild(resetBtn);
+      buttons.appendChild(closeBtn);
+      content.appendChild(buttons);
+      modal.appendChild(content);
+      document.body.appendChild(modal);
+    }
+
     // Make functions globally available
     window.openReviewModal = openReviewModal;
     window.closeReviewModal = closeReviewModal;
@@ -1371,6 +1638,11 @@
     window.openDrinkModal = openDrinkModal;
     window.closeDrinkModal = closeDrinkModal;
     window.selectPayment = selectPayment;
+    window.showImageResizeModal = showImageResizeModal;
+    window.makeImageFeatured = makeImageFeatured;
+    window.addToProducts = addToProducts;
+    window.deleteQuickImage = deleteQuickImage;
+    window.removeFeaturedImage = removeFeaturedImage;
     
     // Testimonials functionality
     let testimonials = [];
@@ -1463,6 +1735,10 @@
     function makeImageResizable(img){
       img.addEventListener('click', (e)=>{
         e.stopPropagation();
+        if(e.detail === 2) { // Double click
+          showImageResizeModal(img);
+          return;
+        }
         document.querySelectorAll('.product-row img, .flyer .logo').forEach(i => i.classList.remove('selected'));
         img.classList.add('selected');
       });

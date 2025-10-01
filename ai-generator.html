@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ask Cyberspace AI - FlyerForge</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            height: calc(100vh - 40px);
+        }
+
+        .chat-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .preview-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .ai-title {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0b7a3b, #667eea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 16px;
+            max-height: 400px;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            max-width: 80%;
+        }
+
+        .user-message {
+            background: #0b7a3b;
+            color: white;
+            margin-left: auto;
+        }
+
+        .ai-message {
+            background: #e9ecef;
+            color: #333;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e9ecef;
+            border-radius: 50px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .send-btn {
+            background: linear-gradient(135deg, #0b7a3b, #1a7a3b);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .template-preview {
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .download-template-btn {
+            background: linear-gradient(135deg, #0b7a3b, #1a7a3b);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="chat-panel">
+            <div class="header">
+                <button onclick="window.location.href='dailygenerator.html'" style="position: absolute; top: 20px; left: 20px; background: #0b7a3b; color: white; border: none; padding: 8px 12px; border-radius: 20px; font-size: 12px; cursor: pointer;">← Main Editor</button>
+                <h1 class="ai-title">🤖 Ask Cyberspace AI</h1>
+                <p>Describe what you want and I'll create the perfect flyer for you!</p>
+            </div>
+            
+            <div class="chat-messages" id="chatMessages">
+                <div class="message ai-message">
+                    <strong>Cyberspace AI:</strong> Hello! I'm here to help you create amazing flyers. Just tell me what you need - like "restaurant menu", "gym promotion", "tech event", etc. and I'll generate a custom template for you!
+                </div>
+            </div>
+            
+            <div class="input-area">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Describe your flyer needs..." />
+                <button class="send-btn" onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+
+        <div class="preview-panel">
+            <h2 style="margin-bottom: 20px; color: #333;">Generated Template</h2>
+            
+            <div id="templatePreview" class="template-preview" style="display: none;">
+                <div id="templateContent"></div>
+                <button class="download-template-btn" onclick="downloadTemplate()">📥 Download Template</button>
+            </div>
+            
+            <div id="noTemplate" style="color: #666; text-align: center;">
+                <p>💡 Ask AI to generate a template based on your needs</p>
+                <p style="font-size: 12px; margin-top: 10px;">Try: "I need a restaurant flyer" or "Create a gym promotion"</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 'initial';
+        let userDetails = {};
+        let currentTemplate = null;
+
+        const templates = {
+            restaurant: {
+                title: "DELICIOUS DINING",
+                subtitle: "Fresh • Authentic • Memorable",
+                content: "Experience culinary excellence with our chef's special menu. From appetizers to desserts, every dish is crafted with passion and the finest ingredients.",
+                colors: ["#d4a574", "#8b4513"],
+                bg: "linear-gradient(135deg, #fff8e1, #ffecb3)"
+            },
+            gym: {
+                title: "FITNESS REVOLUTION",
+                subtitle: "Stronger • Faster • Better",
+                content: "Transform your body and mind with our state-of-the-art equipment and expert trainers. Join today and unlock your potential!",
+                colors: ["#ff6b35", "#d32f2f"],
+                bg: "linear-gradient(135deg, #ffebee, #ffcdd2)"
+            },
+            tech: {
+                title: "INNOVATION SUMMIT",
+                subtitle: "Code • Create • Connect",
+                content: "Join industry leaders and innovators for the biggest tech event of the year. Network, learn, and shape the future of technology.",
+                colors: ["#2196f3", "#1976d2"],
+                bg: "linear-gradient(135deg, #e3f2fd, #bbdefb)"
+            },
+            beauty: {
+                title: "BEAUTY ESSENCE",
+                subtitle: "Glow • Shine • Radiate",
+                content: "Discover your natural beauty with our premium skincare and beauty treatments. Professional care for your perfect look.",
+                colors: ["#e91e63", "#c2185b"],
+                bg: "linear-gradient(135deg, #fce4ec, #f8bbd9)"
+            },
+            education: {
+                title: "LEARN & GROW",
+                subtitle: "Knowledge • Skills • Success",
+                content: "Unlock your potential with our comprehensive courses and expert instructors. Your journey to success starts here.",
+                colors: ["#4caf50", "#388e3c"],
+                bg: "linear-gradient(135deg, #e8f5e8, #c8e6c9)"
+            },
+            business: {
+                title: "BUSINESS SOLUTIONS",
+                subtitle: "Professional • Reliable • Results",
+                content: "Grow your business with our expert consulting and innovative solutions. We help you achieve your goals efficiently.",
+                colors: ["#ff9800", "#f57c00"],
+                bg: "linear-gradient(135deg, #fff3e0, #ffe0b2)"
+            }
+        };
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            addMessage('user', message);
+            input.value = '';
+
+            setTimeout(async () => {
+                const response = await generateAIResponse(message);
+                addMessage('ai', response.text);
+                if (response.template) {
+                    showTemplate(response.template, response.aiContent);
+                }
+                if (response.showLogoUpload) {
+                    showLogoUploadOption();
+                }
+                if (response.showImageUpload) {
+                    showImageUploadOption();
+                }
+                if (response.showBackgroundUpload) {
+                    showBackgroundUploadOption();
+                }
+            }, 1000);
+        }
+
+        function addMessage(type, text) {
+            const messages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}-message`;
+            messageDiv.innerHTML = `<strong>${type === 'user' ? 'You' : 'Cyberspace AI'}:</strong> ${text}`;
+            messages.appendChild(messageDiv);
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        function showLogoUploadOption() {
+            const uploadDiv = document.createElement('div');
+            uploadDiv.innerHTML = `
+                <div style="margin: 15px 0; padding: 15px; background: #f0f8ff; border-radius: 12px; border: 2px dashed #0b7a3b;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #0b7a3b;">📷 Upload Logo:</label>
+                    <input type="file" accept="image/*" onchange="handleLogoUpload(event)" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 6px;">
+                </div>
+            `;
+            document.getElementById('chatMessages').appendChild(uploadDiv);
+            document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+        }
+
+        function handleLogoUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    userDetails.logo = e.target.result;
+                    addMessage('user', `Logo uploaded: ${file.name}`);
+                    setTimeout(() => {
+                        addMessage('ai', 'Perfect! Your logo has been added. What background would you prefer - a solid color or would you like to upload a background image?');
+                    }, 500);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function showImageUploadOption() {
+            const uploadDiv = document.createElement('div');
+            uploadDiv.innerHTML = `
+                <div style="margin: 15px 0; padding: 15px; background: #f0f8ff; border-radius: 12px; border: 2px dashed #0b7a3b;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #0b7a3b;">🖼️ Upload Featured Image:</label>
+                    <input type="file" accept="image/*" onchange="handleFeaturedImageUpload(event)" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 6px;">
+                </div>
+            `;
+            document.getElementById('chatMessages').appendChild(uploadDiv);
+            document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+        }
+
+        function handleFeaturedImageUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    if (!userDetails.images) userDetails.images = [];
+                    userDetails.images.push(e.target.result);
+                    addMessage('user', `Featured image uploaded: ${file.name}`);
+                    updateTemplatePreview();
+                    setTimeout(() => {
+                        addMessage('ai', 'Great! Your featured image has been added. Would you like to add more images or shall we finalize your flyer?');
+                    }, 500);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function showBackgroundUploadOption() {
+            const uploadDiv = document.createElement('div');
+            uploadDiv.innerHTML = `
+                <div style="margin: 15px 0; padding: 15px; background: #f0f8ff; border-radius: 12px; border: 2px dashed #0b7a3b;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #0b7a3b;">🎨 Upload Background Image:</label>
+                    <input type="file" accept="image/*" onchange="handleBackgroundImageUpload(event)" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 6px;">
+                    <div style="margin-top: 10px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #0b7a3b;">Or choose background color:</label>
+                        <input type="color" onchange="handleBackgroundColorChange(event)" style="width: 50px; height: 30px; border: none; border-radius: 6px; cursor: pointer;">
+                    </div>
+                </div>
+            `;
+            document.getElementById('chatMessages').appendChild(uploadDiv);
+            document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+        }
+
+        function handleBackgroundImageUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    userDetails.backgroundImage = e.target.result;
+                    userDetails.backgroundColor = null;
+                    addMessage('user', `Background image uploaded: ${file.name}`);
+                    updateTemplatePreview();
+                    setTimeout(() => {
+                        addMessage('ai', 'Perfect! Your background image has been set. Do you have any featured images you\'d like to include?');
+                        currentStep = 'image_request';
+                        showImageUploadOption();
+                    }, 500);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function handleBackgroundColorChange(event) {
+            userDetails.backgroundColor = event.target.value;
+            userDetails.backgroundImage = null;
+            addMessage('user', `Background color selected: ${event.target.value}`);
+            updateTemplatePreview();
+            setTimeout(() => {
+                addMessage('ai', 'Great color choice! Do you have any featured images you\'d like to include?');
+                currentStep = 'image_request';
+                showImageUploadOption();
+            }, 500);
+        }
+
+        async function generateAIResponse(message) {
+            const keywords = message.toLowerCase();
+            
+            if (currentStep === 'initial') {
+                if (keywords.includes('restaurant') || keywords.includes('food') || keywords.includes('menu')) {
+                    currentTemplate = 'restaurant';
+                    currentStep = 'business_name';
+                    return { text: "Perfect! I'll help you create a restaurant flyer. What's your restaurant name?", template: null };
+                } else if (keywords.includes('gym') || keywords.includes('fitness') || keywords.includes('workout')) {
+                    currentTemplate = 'gym';
+                    currentStep = 'business_name';
+                    return { text: "Great! I'll create a fitness flyer for you. What's your gym or fitness center name?", template: null };
+                } else if (keywords.includes('tech') || keywords.includes('software') || keywords.includes('coding')) {
+                    currentTemplate = 'tech';
+                    currentStep = 'business_name';
+                    return { text: "Excellent! Let's create a tech flyer. What's your company or event name?", template: null };
+                } else if (keywords.includes('beauty') || keywords.includes('salon') || keywords.includes('spa')) {
+                    currentTemplate = 'beauty';
+                    currentStep = 'business_name';
+                    return { text: "Wonderful! I'll help with your beauty business flyer. What's your salon or spa name?", template: null };
+                } else if (keywords.includes('education') || keywords.includes('school') || keywords.includes('course')) {
+                    currentTemplate = 'education';
+                    currentStep = 'business_name';
+                    return { text: "Perfect! Let's create an educational flyer. What's your school or course name?", template: null };
+                } else if (keywords.includes('business') || keywords.includes('corporate') || keywords.includes('company')) {
+                    currentTemplate = 'business';
+                    currentStep = 'business_name';
+                    return { text: "Great! I'll create a business flyer for you. What's your company name?", template: null };
+                } else {
+                    return { text: "I understand you're looking for a custom flyer! Try keywords like 'restaurant', 'gym', 'tech event', 'beauty salon', 'education', or 'business' to get started. What type of business or event is this for?", template: null };
+                }
+            } else if (currentStep === 'business_name') {
+                userDetails.businessName = message;
+                currentStep = 'logo_request';
+                return { text: `Great! ${message} is a perfect name. Do you have a logo you'd like to include?`, showLogoUpload: true, template: null };
+            } else if (currentStep === 'logo_request') {
+                if (message.toLowerCase().includes('no') || message.toLowerCase().includes('skip')) {
+                    currentStep = 'color_preference';
+                    return { text: "No problem! What's your preferred color scheme? (e.g., 'blue and white', 'green', 'modern colors', or 'surprise me')", template: null };
+                }
+                currentStep = 'color_preference';
+                return { text: "Great! What's your preferred color scheme? (e.g., 'blue and white', 'green', 'modern colors', or 'surprise me')", template: null };
+            } else if (currentStep === 'color_preference') {
+                userDetails.colors = message;
+                currentStep = 'background_choice';
+                return { text: "Perfect color choice! Would you like to upload a background image or use a solid color background?", template: null };
+            } else if (currentStep === 'background_choice') {
+                if (message.toLowerCase().includes('upload') || message.toLowerCase().includes('image')) {
+                    currentStep = 'background_upload';
+                    return { text: "Great! Please upload your background image:", showBackgroundUpload: true, template: null };
+                } else {
+                    currentStep = 'image_request';
+                    return { text: "Perfect! Do you have any featured images you'd like to include?", showImageUpload: true, template: null };
+                }
+            } else if (currentStep === 'background_upload') {
+                currentStep = 'image_request';
+                return { text: "Perfect! Do you have any featured images you'd like to include?", showImageUpload: true, template: null };
+            } else if (currentStep === 'image_request') {
+                if (message.toLowerCase().includes('skip')) {
+                    currentStep = 'contact_details';
+                    return { text: "No problem! Now I need your contact details. Please provide: Phone number, Email, and Address (you can type them all together)", template: null };
+                } else {
+                    currentStep = 'contact_details';
+                    return { text: "Great! Now I need your contact details. Please provide: Phone number, Email, and Address (you can type them all together)", template: null };
+                }
+            } else if (currentStep === 'contact_details') {
+                userDetails.contact = message;
+                currentStep = 'final';
+                return { text: `Excellent! I have all the details. Let me create your custom ${currentTemplate} flyer now.`, template: currentTemplate };
+            }
+            
+            return { text: "I'm here to help! What type of flyer do you need?", template: null };
+        }
+
+        function showTemplate(templateKey, aiContent = null) {
+            currentTemplate = templateKey;
+            updateTemplatePreview(aiContent);
+        }
+
+        function updateTemplatePreview(aiContent = null) {
+            if (!currentTemplate) return;
+            
+            const template = templates[currentTemplate];
+            const preview = document.getElementById('templatePreview');
+            const content = document.getElementById('templateContent');
+            const noTemplate = document.getElementById('noTemplate');
+
+            const displayContent = aiContent || {
+                title: userDetails.businessName || template.title,
+                subtitle: template.subtitle,
+                content: template.content
+            };
+
+            const contactInfo = userDetails.contact || 'Contact details will appear here';
+            
+            let backgroundStyle = template.bg;
+            if (userDetails.backgroundImage) {
+                backgroundStyle = `url(${userDetails.backgroundImage}) center/cover`;
+            } else if (userDetails.backgroundColor) {
+                backgroundStyle = userDetails.backgroundColor;
+            }
+
+            content.innerHTML = `
+                <div id="flyerContent" style="background: ${backgroundStyle}; padding: 20px; border-radius: 12px; margin-bottom: 15px; position: relative; min-height: 300px; text-align: center;">
+                    ${userDetails.logo ? `<img src="${userDetails.logo}" style="width: 100px; height: auto; object-fit: contain; margin: 0 auto 15px auto; display: block;">` : ''}
+                    <h2 style="color: ${template.colors[0]}; font-size: 24px; margin-bottom: 10px;">${displayContent.title.toUpperCase()}</h2>
+                    <p style="color: ${template.colors[1]}; font-weight: 600; margin-bottom: 15px;">${displayContent.subtitle}</p>
+                    <p style="color: #333; font-size: 14px; line-height: 1.6; margin-bottom: 15px;">${displayContent.content}</p>
+                    <div id="templateImages" style="margin: 15px 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;"></div>
+                    <div style="background: rgba(255,255,255,0.8); padding: 10px; border-radius: 8px; font-size: 12px; color: #333;">
+                        <strong>Contact:</strong> ${contactInfo}
+                    </div>
+                </div>
+                <div style="display: flex; gap: 8px; margin-top: 10px; align-items: center; justify-content: center; flex-wrap: wrap;">
+                    <input type="color" onchange="changeBackgroundColor(event)" style="width: 35px; height: 25px; border: none; border-radius: 4px; cursor: pointer;" title="Change Background Color">
+                    <input type="file" accept="image/*" onchange="changeBackgroundImage(event)" style="font-size: 9px; width: 100px;" title="Upload Background Image">
+                    <input type="file" accept="image/*" onchange="addFeaturedImage(event)" style="font-size: 9px; width: 100px;" title="Add Featured Image">
+                    <button onclick="continueInMainGenerator()" style="background: #0b7a3b; color: white; border: none; padding: 6px 12px; border-radius: 15px; font-size: 11px; cursor: pointer;">✏️ Edit in Main Generator</button>
+                </div>
+            `;
+
+            if (userDetails.images && userDetails.images.length > 0) {
+                const imagesContainer = document.getElementById('templateImages');
+                userDetails.images.forEach((imageSrc, index) => {
+                    const imgWrapper = document.createElement('div');
+                    imgWrapper.style.cssText = 'position: relative; display: inline-block;';
+                    
+                    const img = document.createElement('img');
+                    img.src = imageSrc;
+                    img.style.cssText = 'width: 80px; height: 80px; object-fit: cover; border-radius: 8px; cursor: pointer;';
+                    img.onclick = () => showImageResizeModal(img, index);
+                    
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.innerHTML = '×';
+                    deleteBtn.style.cssText = 'position: absolute; top: -5px; right: -5px; background: red; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 12px; cursor: pointer;';
+                    deleteBtn.onclick = () => removeFeaturedImage(index);
+                    
+                    imgWrapper.appendChild(img);
+                    imgWrapper.appendChild(deleteBtn);
+                    imagesContainer.appendChild(imgWrapper);
+                });
+            }
+
+            preview.style.display = 'block';
+            noTemplate.style.display = 'none';
+        }
+
+        function changeBackgroundColor(event) {
+            userDetails.backgroundColor = event.target.value;
+            userDetails.backgroundImage = null;
+            updateTemplatePreview();
+        }
+
+        function changeBackgroundImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    userDetails.backgroundImage = e.target.result;
+                    userDetails.backgroundColor = null;
+                    updateTemplatePreview();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function addFeaturedImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    if (!userDetails.images) userDetails.images = [];
+                    userDetails.images.push(e.target.result);
+                    updateTemplatePreview();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removeFeaturedImage(index) {
+            if (userDetails.images) {
+                userDetails.images.splice(index, 1);
+                updateTemplatePreview();
+            }
+        }
+
+        function showImageResizeModal(img, index) {
+            const modal = document.createElement('div');
+            modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 1000;';
+            
+            const content = document.createElement('div');
+            content.style.cssText = 'background: white; padding: 20px; border-radius: 12px; text-align: center;';
+            
+            const slider = document.createElement('input');
+            slider.type = 'range';
+            slider.min = '40';
+            slider.max = '150';
+            slider.value = '80';
+            slider.style.cssText = 'width: 200px; margin: 10px;';
+            
+            const currentSize = parseInt(img.style.width) || 80;
+            slider.value = currentSize;
+            
+            content.innerHTML = `
+                <h3>Resize Image</h3>
+                <p>Size: <span id="sizeValue">${currentSize}px</span></p>
+            `;
+            content.appendChild(slider);
+            
+            const buttons = document.createElement('div');
+            buttons.style.cssText = 'margin-top: 15px; display: flex; gap: 10px; justify-content: center;';
+            
+            const closeBtn = document.createElement('button');
+            closeBtn.textContent = 'Done';
+            closeBtn.style.cssText = 'padding: 8px 16px; background: #0b7a3b; color: white; border: none; border-radius: 6px; cursor: pointer;';
+            closeBtn.onclick = () => document.body.removeChild(modal);
+            
+            slider.oninput = () => {
+                img.style.width = slider.value + 'px';
+                img.style.height = slider.value + 'px';
+                document.getElementById('sizeValue').textContent = slider.value + 'px';
+            };
+            
+            buttons.appendChild(closeBtn);
+            content.appendChild(buttons);
+            modal.appendChild(content);
+            document.body.appendChild(modal);
+        }
+
+        function continueInMainGenerator() {
+            localStorage.setItem('aiGeneratedData', JSON.stringify({
+                template: currentTemplate,
+                businessName: userDetails.businessName,
+                colors: userDetails.colors,
+                contact: userDetails.contact
+            }));
+            window.location.href = 'dailygenerator.html';
+        }
+
+        function downloadTemplate() {
+            const flyerContent = document.getElementById('flyerContent');
+            
+            html2canvas(flyerContent, {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: null
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'ai-generated-template.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        }
+
+        document.getElementById('chatInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</body>
+</html>
