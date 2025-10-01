@@ -58,9 +58,32 @@
     .fire-red .bar{width:30px;height:6px;background:#fff;border-radius:3px;opacity:0.8}
     .fire-red .dynamic-text{font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:1px}
     
+    @media (max-width:480px){
+      .fire-red .dynamic-text{font-size:12px}
+      .modern-tech .tags{gap:4px}
+      .modern-tech .tag{padding:2px 8px;font-size:10px}
+    }
+    
     /* Loader animations */
     @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
     @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+    
+    /* Mobile responsiveness */
+    @media (max-width:768px){
+      body{padding:10px}
+      .templates-grid{grid-template-columns:1fr;gap:20px}
+      .template-preview{height:300px}
+      .modern-tech,.nature-green,.sunset-orange,.ocean-blue,.royal-purple,.fire-red{padding:20px}
+      h1{font-size:24px}
+      .container{max-width:100%}
+    }
+    
+    @media (max-width:480px){
+      .template-preview{height:250px}
+      .modern-tech h2,.nature-green h2,.sunset-orange h2,.ocean-blue h2,.royal-purple h2,.fire-red h2{font-size:20px}
+      .template-info{padding:15px}
+      .use-btn{padding:10px 20px;font-size:14px}
+    }
   </style>
 </head>
 <body>
