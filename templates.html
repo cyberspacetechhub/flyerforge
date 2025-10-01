@@ -7,7 +7,8 @@
   <link rel="icon" type="image/png" href="images/flyerforge-logo2.png" />
   <style>
     :root{--green:#0b7a3b;--accent:#1a7a3b;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial}
-    body{margin:0;background:#f7f7f8;color:#111;padding:20px}
+    *{box-sizing:border-box}
+    body{margin:0;background:#f7f7f8;color:#111;padding:20px;overflow-x:hidden}
     .container{max-width:1200px;margin:0 auto}
     h1{text-align:center;color:var(--green);margin-bottom:30px}
     .templates-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:30px;margin:30px 0}
@@ -79,10 +80,41 @@
     }
     
     @media (max-width:480px){
-      .template-preview{height:250px}
-      .modern-tech h2,.nature-green h2,.sunset-orange h2,.ocean-blue h2,.royal-purple h2,.fire-red h2{font-size:20px}
-      .template-info{padding:15px}
-      .use-btn{padding:10px 20px;font-size:14px}
+      body{padding:6px;overflow-x:hidden}
+      .container{max-width:100vw;overflow-x:hidden}
+      .template-preview{height:220px}
+      .modern-tech h2,.nature-green h2,.sunset-orange h2,.ocean-blue h2,.royal-purple h2,.fire-red h2{font-size:18px}
+      .template-info{padding:12px;box-sizing:border-box}
+      .use-btn{padding:8px 16px;font-size:13px;width:100%;box-sizing:border-box}
+      .modern-tech,.nature-green,.sunset-orange,.ocean-blue,.royal-purple,.fire-red{padding:15px;box-sizing:border-box}
+      h1{font-size:20px;word-wrap:break-word}
+      .template{box-sizing:border-box}
+    }
+    
+    @media (max-width:414px){
+      body{padding:4px;overflow-x:hidden}
+      .container{max-width:100vw;width:100vw;box-sizing:border-box}
+      .template-preview{height:180px}
+      .modern-tech h2,.nature-green h2,.sunset-orange h2,.ocean-blue h2,.royal-purple h2,.fire-red h2{font-size:16px}
+      .template-info{padding:8px;box-sizing:border-box}
+      .use-btn{padding:6px 12px;font-size:12px;width:100%;box-sizing:border-box}
+      .modern-tech,.nature-green,.sunset-orange,.ocean-blue,.royal-purple,.fire-red{padding:10px;box-sizing:border-box}
+      h1{font-size:18px;word-wrap:break-word;hyphens:auto}
+      .templates-grid{gap:12px}
+      .template{box-sizing:border-box;width:100%}
+    }
+    
+    @media (max-width:280px){
+      body{padding:2px;overflow-x:hidden}
+      .container{max-width:100vw;width:100vw;box-sizing:border-box}
+      .template-preview{height:140px}
+      .modern-tech h2,.nature-green h2,.sunset-orange h2,.ocean-blue h2,.royal-purple h2,.fire-red h2{font-size:13px}
+      .template-info{padding:6px;box-sizing:border-box}
+      .use-btn{padding:4px 8px;font-size:10px;width:100%;box-sizing:border-box}
+      .modern-tech,.nature-green,.sunset-orange,.ocean-blue,.royal-purple,.fire-red{padding:8px;box-sizing:border-box}
+      h1{font-size:14px;word-wrap:break-word;hyphens:auto}
+      .templates-grid{gap:8px}
+      .template{box-sizing:border-box;width:100%}
     }
   </style>
 </head>
