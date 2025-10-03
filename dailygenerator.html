@@ -152,7 +152,8 @@
     .response-title{font-size:18px;font-weight:600;margin-bottom:10px}
     .response-message{color:#666;margin-bottom:20px;line-height:1.5}
     .response-btn{background:#0b7a3b;color:#fff;border:none;padding:10px 20px;border-radius:6px;cursor:pointer;font-weight:600}
-    .star.active{opacity:1}
+    .star{opacity:0.3;transition:opacity 0.2s;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+    .star.active{opacity:1;color:#fbbf24}
     .template-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin:20px 0}
     .template-card{border:2px solid #e9ecef;border-radius:12px;padding:15px;cursor:pointer;transition:all 0.2s ease;text-align:center}
     .template-card:hover{border-color:#0b7a3b;transform:translateY(-2px);box-shadow:0 4px 12px rgba(11,122,59,0.1)}
@@ -163,14 +164,25 @@
     .scratch-btn{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;padding:15px 30px;border:none;border-radius:10px;font-size:16px;font-weight:600;cursor:pointer;margin:10px}
     .scratch-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(99,102,241,0.3)}
 
-    /* Quick upload grid */
-    .quick-img{position:relative;width:80px;height:80px;border-radius:8px;overflow:hidden;cursor:pointer;border:2px solid #ddd;transition:all 0.2s ease}
-    .quick-img:hover{border-color:#0b7a3b;transform:scale(1.05)}
-    .quick-img img{width:100%;height:100%;object-fit:cover}
-    .quick-options{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.8);color:#fff;padding:4px;display:none;flex-direction:column;gap:2px}
-    .quick-img:hover .quick-options{display:flex}
-    .quick-btn{background:none;border:none;color:#fff;font-size:10px;padding:2px;cursor:pointer;border-radius:2px}
-    .quick-btn:hover{background:rgba(255,255,255,0.2)}
+    /* Quick upload grid - Mobile optimized */
+    .quick-img{position:relative;width:80px;height:80px;border-radius:8px;overflow:hidden;cursor:pointer;border:2px solid #ddd;transition:all 0.2s ease;touch-action:manipulation}
+    .quick-img:hover,.quick-img:active{border-color:#0b7a3b;transform:scale(1.05)}
+    .quick-img img{width:100%;height:100%;object-fit:cover;pointer-events:none}
+    .quick-options{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.9);color:#fff;padding:4px;display:none;flex-direction:column;gap:2px;border-radius:0 0 6px 6px}
+    .quick-btn{background:none;border:none;color:#fff;font-size:10px;padding:6px;cursor:pointer;border-radius:3px;touch-action:manipulation;min-height:28px}
+    .quick-btn:hover,.quick-btn:active{background:rgba(255,255,255,0.2);transform:scale(0.95)}
+    
+    @media (max-width: 768px) {
+      .quick-img{width:70px;height:70px}
+      .quick-btn{padding:8px;font-size:11px;min-height:32px}
+      .quick-options{padding:6px;gap:3px}
+    }
+    
+    @media (max-width: 480px) {
+      .quick-img{width:60px;height:60px}
+      .quick-btn{padding:10px;font-size:12px;min-height:36px}
+      .quick-options{padding:8px;gap:4px}
+    }
 
     /* responsive */
     @media (max-width:980px){
@@ -604,15 +616,39 @@
         </div>
 
         <div style="background:#f8f9fa;padding:15px;border-radius:8px;margin:15px 0;text-align:center">
-          <h4 style="margin:0 0 10px 0;color:#0b7a3b">📸 Quick Image Upload</h4>
-          <input type="file" id="quickUpload" accept="image/*" multiple style="margin-bottom:10px" />
-          <div style="margin-bottom:10px">
-            <label style="font-size:12px;color:#0b7a3b;font-weight:600">🖼️ Background Image:</label>
-            <input type="file" id="backgroundUpload" accept="image/*" style="font-size:11px;margin-left:5px" />
+          <h4 style="margin:0 0 10px 0;color:#0b7a3b">📸 Creator Tools</h4>
+          
+          <div style="background:#fff;padding:12px;border-radius:8px;margin-bottom:12px;border:2px dashed #0b7a3b">
+            <label for="quickUpload" style="display:block;cursor:pointer;padding:8px;background:#0b7a3b;color:#fff;border-radius:6px;margin-bottom:8px;font-size:14px;font-weight:600">📤 Upload Images (Max 10)</label>
+            <input type="file" id="quickUpload" accept="image/*" multiple style="display:none" />
+            <div style="font-size:11px;color:#666">JPG, PNG, WebP • Max 5MB each</div>
           </div>
-          <div style="font-size:12px;color:#666;margin-bottom:10px">💡 <strong>Tip:</strong> Click any image in the flyer to resize it. Drag images to reposition them.</div>
-          <div style="font-size:11px;color:#999;margin-bottom:10px">Max 10 images, 5MB each</div>
-          <div id="quickUploadGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-top:10px"></div>
+          
+          <div style="background:#fff;padding:12px;border-radius:8px;margin-bottom:12px;border:1px solid #ddd">
+            <h5 style="margin:0 0 8px 0;color:#0b7a3b;font-size:13px">🎨 Background Tools</h5>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
+              <label for="backgroundUpload" style="background:#3b82f6;color:#fff;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:11px;flex:1;min-width:100px">🖼️ Upload BG</label>
+              <input type="file" id="backgroundUpload" accept="image/*" style="display:none" />
+              <button onclick="removeBackground()" style="background:#ef4444;color:#fff;padding:6px 12px;border:none;border-radius:6px;cursor:pointer;font-size:11px;flex:1;min-width:100px">🗑️ Remove BG</button>
+            </div>
+          </div>
+          
+          <div style="background:#fff;padding:12px;border-radius:8px;margin-bottom:12px;border:1px solid #ddd">
+            <h5 style="margin:0 0 8px 0;color:#0b7a3b;font-size:13px">⚡ Advanced Tools</h5>
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px">
+              <button onclick="openColorPalette()" style="background:#8b5cf6;color:#fff;padding:8px;border:none;border-radius:6px;cursor:pointer;font-size:10px">🎨 Colors</button>
+              <button onclick="openFontSelector()" style="background:#f59e0b;color:#fff;padding:8px;border:none;border-radius:6px;cursor:pointer;font-size:10px">🔤 Fonts</button>
+              <button onclick="openEffectsPanel()" style="background:#10b981;color:#fff;padding:8px;border:none;border-radius:6px;cursor:pointer;font-size:10px">✨ Effects</button>
+              <button onclick="openLayoutGrid()" style="background:#ef4444;color:#fff;padding:8px;border:none;border-radius:6px;cursor:pointer;font-size:10px">📐 Layout</button>
+              <button onclick="addTextBox()" style="background:#6366f1;color:#fff;padding:8px;border:none;border-radius:6px;cursor:pointer;font-size:10px">📝 Add Text</button>
+              <button onclick="toggleSectionMode()" style="background:#f59e0b;color:#fff;padding:8px;border:none;border-radius:6px;cursor:pointer;font-size:10px">🗑️ Remove</button>
+              <button onclick="undo()" style="background:#6c757d;color:#fff;padding:8px;border:none;border-radius:6px;cursor:pointer;font-size:10px" title="Undo (Ctrl+Z)">↶ Undo</button>
+              <button onclick="redo()" style="background:#6c757d;color:#fff;padding:8px;border:none;border-radius:6px;cursor:pointer;font-size:10px" title="Redo (Ctrl+Y)">↷ Redo</button>
+            </div>
+          </div>
+          
+          <div style="font-size:12px;color:#666;margin-bottom:10px">💡 <strong>Mobile Tip:</strong> Tap images to show options. Use slider to resize.</div>
+          <div id="quickUploadGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:8px;margin-top:10px"></div>
         </div>
         
         <div style="display:flex;justify-content:flex-end;align-items:center;margin-top:8px">
@@ -700,8 +736,9 @@
       
       <div class="scratch-section">
         <h3>✨ Start from Scratch</h3>
-        <p>Create your own unique design with complete creative control</p>
-        <button class="scratch-btn" onclick="startFromScratch()">🎨 Blank Canvas</button>
+        <p>Create your own unique design with complete creative control - perfect for learning and practice</p>
+        <button class="scratch-btn" onclick="startBlankTemplate()">🎨 Blank Canvas</button>
+        <p style="font-size:12px;color:#666;margin-top:10px">Like Canva or Photoshop - add images, text, and content anywhere you want</p>
       </div>
       
       <h3>📄 Professional Templates</h3>
@@ -1222,12 +1259,25 @@
         container.className = 'quick-img';
         container.innerHTML = `
           <img src="${src}" />
-          <div class="quick-options">
-            <button class="quick-btn" onclick="makeImageFeatured('${src}', ${idx})">⭐ Featured</button>
-            <button class="quick-btn" onclick="addToProducts('${src}', ${idx})">📦 Product</button>
-            <button class="quick-btn" onclick="deleteQuickImage(${idx})">🗑️ Delete</button>
+          <div class="quick-options" style="display:flex;flex-direction:column;gap:2px;padding:4px;background:rgba(0,0,0,0.9);position:absolute;bottom:0;left:0;right:0;border-radius:0 0 8px 8px">
+            <button class="quick-btn" onclick="makeImageFeatured('${src}', ${idx})" style="background:#10b981;color:#fff;border:none;padding:4px;border-radius:3px;font-size:10px;cursor:pointer;touch-action:manipulation">⭐ Featured</button>
+            <button class="quick-btn" onclick="addToProducts('${src}', ${idx})" style="background:#3b82f6;color:#fff;border:none;padding:4px;border-radius:3px;font-size:10px;cursor:pointer;touch-action:manipulation">📦 Product</button>
+            <button class="quick-btn" onclick="deleteQuickImage(${idx})" style="background:#ef4444;color:#fff;border:none;padding:4px;border-radius:3px;font-size:10px;cursor:pointer;touch-action:manipulation">🗑️ Delete</button>
           </div>
         `;
+        
+        container.addEventListener('click', (e) => {
+          e.preventDefault();
+          const options = container.querySelector('.quick-options');
+          const isVisible = options.style.display === 'flex';
+          
+          document.querySelectorAll('.quick-options').forEach(opt => {
+            if (opt !== options) opt.style.display = 'none';
+          });
+          
+          options.style.display = isVisible ? 'none' : 'flex';
+        });
+        
         grid.appendChild(container);
       });
     }
@@ -1338,11 +1388,25 @@
     
     // Star rating functionality
     document.querySelectorAll('.star').forEach(star => {
-      star.addEventListener('click', ()=> {
+      star.addEventListener('click', (e)=> {
+        e.preventDefault();
         selectedRating = parseInt(star.dataset.rating);
         document.querySelectorAll('.star').forEach((s, idx) => {
-          s.classList.toggle('active', idx < selectedRating);
+          if(idx < selectedRating) {
+            s.classList.add('active');
+            s.style.opacity = '1';
+            s.style.color = '#fbbf24';
+          } else {
+            s.classList.remove('active');
+            s.style.opacity = '0.3';
+            s.style.color = '';
+          }
         });
+      });
+      
+      // Prevent text selection on mobile
+      star.addEventListener('touchstart', (e) => {
+        e.preventDefault();
       });
     });
     
@@ -1361,7 +1425,7 @@
       details.style.display = 'block';
       
       if(type === 'bank'){
-        details.innerHTML = '<h4>Bank Transfer Details</h4><p><strong>Account:</strong> 1234567890<br><strong>Bank:</strong> Example Bank<br><strong>Name:</strong> Cyberspace Tech Hub</p>';
+        details.innerHTML = '<h4>Bank Transfer Details</h4><p><strong>Account:</strong> 2021478389<br><strong>Bank:</strong> Kuda Bank<br><strong>Name:</strong> Mkpuma Shedrach F.</p>';
       } else if(type === 'crypto'){
         details.innerHTML = '<h4>Cryptocurrency</h4><p><strong>Bitcoin:</strong> 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa<br><strong>Ethereum:</strong> 0x742d35Cc6634C0532925a3b8D4C0d886E682184C</p>';
       } else {
@@ -1579,56 +1643,71 @@
     // Image resize functionality
     function showImageResizeModal(img) {
       const modal = document.createElement('div');
-      modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 1000;';
+      modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 20px; box-sizing: border-box;';
       
       const content = document.createElement('div');
-      content.style.cssText = 'background: white; padding: 20px; border-radius: 12px; text-align: center;';
-      
-      const slider = document.createElement('input');
-      slider.type = 'range';
-      slider.min = '50';
-      slider.max = '200';
-      slider.value = '100';
-      slider.style.cssText = 'width: 200px; margin: 10px;';
+      content.style.cssText = 'background: white; padding: 20px; border-radius: 12px; text-align: center; width: 100%; max-width: 400px;';
       
       const currentSize = parseInt(img.style.width) || 100;
-      slider.value = currentSize;
       
       content.innerHTML = `
-        <h3>Resize Image</h3>
-        <p>Size: <span id="sizeValue">${currentSize}px</span></p>
+        <h3 style="margin-bottom: 20px;">Resize Image</h3>
+        <div style="margin-bottom: 20px;">
+          <p style="margin-bottom: 10px;">Size: <span id="sizeValue">${currentSize}px</span></p>
+          <input type="range" id="sizeSlider" min="50" max="200" value="${currentSize}" 
+                 style="width: 100%; height: 40px; -webkit-appearance: none; appearance: none; background: #ddd; border-radius: 20px; outline: none;" />
+        </div>
+        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+          <button id="resetBtn" style="padding: 12px 20px; background: #6c757d; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; touch-action: manipulation;">Reset</button>
+          <button id="closeBtn" style="padding: 12px 20px; background: #0b7a3b; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; touch-action: manipulation;">Done</button>
+        </div>
       `;
-      content.appendChild(slider);
       
-      const buttons = document.createElement('div');
-      buttons.style.cssText = 'margin-top: 15px; display: flex; gap: 10px; justify-content: center;';
+      modal.appendChild(content);
+      document.body.appendChild(modal);
       
-      const resetBtn = document.createElement('button');
-      resetBtn.textContent = 'Reset';
-      resetBtn.style.cssText = 'padding: 8px 16px; background: #6c757d; color: white; border: none; border-radius: 6px; cursor: pointer;';
-      resetBtn.onclick = () => {
-        img.style.width = '100px';
-        img.style.height = '100px';
-        slider.value = '100';
-        document.getElementById('sizeValue').textContent = '100px';
-      };
-      
-      const closeBtn = document.createElement('button');
-      closeBtn.textContent = 'Done';
-      closeBtn.style.cssText = 'padding: 8px 16px; background: #0b7a3b; color: white; border: none; border-radius: 6px; cursor: pointer;';
-      closeBtn.onclick = () => document.body.removeChild(modal);
+      const slider = content.querySelector('#sizeSlider');
+      const style = document.createElement('style');
+      style.textContent = `
+        #sizeSlider::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          background: #0b7a3b;
+          cursor: pointer;
+          border: 2px solid #fff;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+      `;
+      document.head.appendChild(style);
       
       slider.oninput = () => {
         img.style.width = slider.value + 'px';
         img.style.height = slider.value + 'px';
-        document.getElementById('sizeValue').textContent = slider.value + 'px';
+        content.querySelector('#sizeValue').textContent = slider.value + 'px';
+        saveImagePosition(img);
       };
       
-      buttons.appendChild(resetBtn);
-      buttons.appendChild(closeBtn);
-      content.appendChild(buttons);
-      modal.appendChild(content);
-      document.body.appendChild(modal);
+      content.querySelector('#resetBtn').onclick = () => {
+        img.style.width = '100px';
+        img.style.height = '100px';
+        slider.value = '100';
+        content.querySelector('#sizeValue').textContent = '100px';
+        saveImagePosition(img);
+      };
+      
+      content.querySelector('#closeBtn').onclick = () => {
+        document.body.removeChild(modal);
+        document.head.removeChild(style);
+      };
+      
+      modal.onclick = (e) => {
+        if (e.target === modal) {
+          document.body.removeChild(modal);
+          document.head.removeChild(style);
+        }
+      };
     }
 
     // Make functions globally available
@@ -1643,6 +1722,380 @@
     window.addToProducts = addToProducts;
     window.deleteQuickImage = deleteQuickImage;
     window.removeFeaturedImage = removeFeaturedImage;
+    window.openColorPalette = openColorPalette;
+    window.openFontSelector = openFontSelector;
+    window.openEffectsPanel = openEffectsPanel;
+    window.openLayoutGrid = openLayoutGrid;
+    window.addTextBox = addTextBox;
+    window.toggleSectionMode = toggleSectionMode;
+    window.toggleSection = toggleSection;
+    
+    function makeTextEditable() {
+      const editableElements = ['flyerDesc', 'flyerAdvert'];
+      editableElements.forEach(id => {
+        const element = document.getElementById(id);
+        if(element) {
+          element.contentEditable = true;
+          element.style.cursor = 'text';
+          element.addEventListener('mouseup', showTextToolbar);
+          element.addEventListener('keyup', showTextToolbar);
+          element.addEventListener('focus', () => element.style.outline = '1px dashed #0b7a3b');
+          element.addEventListener('blur', () => element.style.outline = 'none');
+        }
+      });
+    }
+    
+    // Text formatting toolbar
+    let textToolbar = null;
+    
+    function showTextToolbar(e) {
+      const selection = window.getSelection();
+      if (!selection.rangeCount || selection.isCollapsed) {
+        hideTextToolbar();
+        return;
+      }
+      
+      const range = selection.getRangeAt(0);
+      const rect = range.getBoundingClientRect();
+      
+      if (!textToolbar) {
+        textToolbar = document.createElement('div');
+        textToolbar.id = 'textToolbar';
+        textToolbar.style.cssText = 'position:fixed;background:#333;color:#fff;padding:8px;border-radius:6px;z-index:3000;display:flex;gap:4px;box-shadow:0 4px 12px rgba(0,0,0,0.3)';
+        textToolbar.innerHTML = `
+          <button onclick="formatText('bold')" style="background:none;border:none;color:#fff;padding:4px 8px;cursor:pointer;border-radius:3px;font-weight:bold">B</button>
+          <button onclick="formatText('italic')" style="background:none;border:none;color:#fff;padding:4px 8px;cursor:pointer;border-radius:3px;font-style:italic">I</button>
+          <button onclick="formatText('underline')" style="background:none;border:none;color:#fff;padding:4px 8px;cursor:pointer;border-radius:3px;text-decoration:underline">U</button>
+          <select onchange="formatText('fontSize', this.value); this.value=''" style="background:#444;color:#fff;border:1px solid #666;padding:2px;border-radius:3px;font-size:11px">
+            <option value="">Size</option>
+            <option value="10px">10px</option>
+            <option value="12px">12px</option>
+            <option value="14px">14px</option>
+            <option value="16px">16px</option>
+            <option value="18px">18px</option>
+            <option value="20px">20px</option>
+            <option value="24px">24px</option>
+            <option value="28px">28px</option>
+            <option value="32px">32px</option>
+            <option value="custom">Custom...</option>
+          </select>
+          <select onchange="formatText('fontName', this.value); this.value=''" style="background:#444;color:#fff;border:1px solid #666;padding:2px;border-radius:3px;font-size:11px">
+            <option value="">Font</option>
+            <option value="Arial">Arial</option>
+            <option value="Georgia">Georgia</option>
+            <option value="Times New Roman">Times</option>
+            <option value="Helvetica">Helvetica</option>
+            <option value="Verdana">Verdana</option>
+            <option value="Impact">Impact</option>
+            <option value="Comic Sans MS">Comic Sans</option>
+          </select>
+        `;
+        
+        // Prevent toolbar from closing when clicking inside it
+        textToolbar.addEventListener('click', (e) => {
+          e.stopPropagation();
+        });
+        
+        document.body.appendChild(textToolbar);
+      }
+      
+      textToolbar.style.left = rect.left + (rect.width / 2) - 100 + 'px';
+      textToolbar.style.top = rect.top - 50 + 'px';
+      textToolbar.style.display = 'flex';
+    }
+    
+    function hideTextToolbar() {
+      if (textToolbar) {
+        textToolbar.style.display = 'none';
+      }
+    }
+    
+    // Undo/Redo functionality
+    let undoStack = [];
+    let redoStack = [];
+    let maxUndoSteps = 50;
+    
+    function saveState() {
+      const state = {
+        flyerHTML: document.getElementById('flyer').innerHTML,
+        businessName: document.getElementById('businessNameInput').value,
+        businessType: document.getElementById('businessTypeSelect').value,
+        headline: document.getElementById('headlineInput').value,
+        subline: document.getElementById('sublineInput').value,
+        tags: document.getElementById('tagsInput').value,
+        advert: document.getElementById('advertInput').value,
+        address: document.getElementById('addressInput').value,
+        contact: document.getElementById('contactInput').value,
+        email: document.getElementById('emailInput').value,
+        website: document.getElementById('websiteInput').value
+      };
+      
+      undoStack.push(JSON.stringify(state));
+      if(undoStack.length > maxUndoSteps) {
+        undoStack.shift();
+      }
+      redoStack = []; // Clear redo stack when new action is performed
+    }
+    
+    function undo() {
+      if(undoStack.length > 1) {
+        const currentState = undoStack.pop();
+        redoStack.push(currentState);
+        const previousState = JSON.parse(undoStack[undoStack.length - 1]);
+        restoreState(previousState);
+      }
+    }
+    
+    function redo() {
+      if(redoStack.length > 0) {
+        const nextState = JSON.parse(redoStack.pop());
+        undoStack.push(JSON.stringify(nextState));
+        restoreState(nextState);
+      }
+    }
+    
+    function restoreState(state) {
+      document.getElementById('flyer').innerHTML = state.flyerHTML;
+      document.getElementById('businessNameInput').value = state.businessName;
+      document.getElementById('businessTypeSelect').value = state.businessType;
+      document.getElementById('headlineInput').value = state.headline;
+      document.getElementById('sublineInput').value = state.subline;
+      document.getElementById('tagsInput').value = state.tags;
+      document.getElementById('advertInput').value = state.advert;
+      document.getElementById('addressInput').value = state.address;
+      document.getElementById('contactInput').value = state.contact;
+      document.getElementById('emailInput').value = state.email;
+      document.getElementById('websiteInput').value = state.website;
+      
+      // Re-enable interactions
+      makeTextEditable();
+      renderFlyerProducts();
+    }
+    
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      if(e.ctrlKey || e.metaKey) {
+        if(e.key === 'z' && !e.shiftKey) {
+          e.preventDefault();
+          undo();
+        } else if((e.key === 'y') || (e.key === 'z' && e.shiftKey)) {
+          e.preventDefault();
+          redo();
+        }
+      }
+    });
+    
+    function formatText(command, value = null) {
+      saveState(); // Save state before formatting
+      
+      if(command === 'fontSize') {
+        if(value === 'custom') {
+          const customSize = prompt('Enter font size (e.g., 16px, 1.2em, 120%):');
+          if(customSize) {
+            document.execCommand('fontSize', false, '7'); // Use size 7 as placeholder
+            const fontElements = document.querySelectorAll('font[size="7"]');
+            fontElements.forEach(el => {
+              el.removeAttribute('size');
+              el.style.fontSize = customSize;
+            });
+          }
+          return;
+        } else if(value && value !== '') {
+          document.execCommand('fontSize', false, '7'); // Use size 7 as placeholder
+          const fontElements = document.querySelectorAll('font[size="7"]');
+          fontElements.forEach(el => {
+            el.removeAttribute('size');
+            el.style.fontSize = value;
+          });
+          return;
+        }
+      } else if(value && value !== '') {
+        document.execCommand(command, false, value);
+        if(command === 'fontName') {
+          return;
+        }
+      } else if(command !== 'fontSize' && command !== 'fontName') {
+        document.execCommand(command, false, value);
+      }
+      hideTextToolbar();
+    }
+    
+    // Hide toolbar when clicking elsewhere
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('[contenteditable="true"]') && !e.target.closest('#textToolbar')) {
+        hideTextToolbar();
+      }
+    });
+    
+    // Prevent toolbar from closing on mousedown events
+    document.addEventListener('mousedown', (e) => {
+      if (e.target.closest('#textToolbar')) {
+        e.stopPropagation();
+      }
+    });
+    
+    window.formatText = formatText;
+    window.showTextToolbar = showTextToolbar;
+    window.hideTextToolbar = hideTextToolbar;
+    window.makeTextEditable = makeTextEditable;
+    window.undo = undo;
+    window.redo = redo;
+    window.saveState = saveState;
+    
+    function openColorPalette() {
+      const modal = createToolModal('🎨 Color Palette', `
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0">
+          <div onclick="applyColorScheme('#0b7a3b','#1a7a3b')" style="background:linear-gradient(135deg,#0b7a3b,#1a7a3b);height:60px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:12px">Green</div>
+          <div onclick="applyColorScheme('#3b82f6','#1d4ed8')" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8);height:60px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:12px">Blue</div>
+          <div onclick="applyColorScheme('#ef4444','#dc2626')" style="background:linear-gradient(135deg,#ef4444,#dc2626);height:60px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:12px">Red</div>
+          <div onclick="applyColorScheme('#8b5cf6','#7c3aed')" style="background:linear-gradient(135deg,#8b5cf6,#7c3aed);height:60px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:12px">Purple</div>
+        </div>
+      `);
+    }
+    
+    function openFontSelector() {
+      const modal = createToolModal('🔤 Font Styles', `
+        <div style="margin:20px 0">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <button onclick="applyFont('Arial, sans-serif', 'bold')" style="font-family:Arial,sans-serif;font-weight:bold;padding:12px;border:1px solid #ddd;border-radius:6px;cursor:pointer;background:#fff;font-size:16px">Arial Bold</button>
+            <button onclick="applyFont('Georgia, serif', 'bold')" style="font-family:Georgia,serif;font-weight:bold;padding:12px;border:1px solid #ddd;border-radius:6px;cursor:pointer;background:#fff;font-size:16px">Georgia Bold</button>
+            <button onclick="applyFont('Times New Roman, serif', '900')" style="font-family:'Times New Roman',serif;font-weight:900;padding:12px;border:1px solid #ddd;border-radius:6px;cursor:pointer;background:#fff;font-size:16px">Times Heavy</button>
+            <button onclick="applyFont('Helvetica, sans-serif', '300')" style="font-family:Helvetica,sans-serif;font-weight:300;padding:12px;border:1px solid #ddd;border-radius:6px;cursor:pointer;background:#fff;font-size:16px">Helvetica Light</button>
+          </div>
+        </div>
+      `);
+    }
+    
+    function openEffectsPanel() {
+      const modal = createToolModal('✨ Visual Effects', `
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:20px 0">
+          <button onclick="applyTextEffect('shadow')" style="background:#6366f1;color:#fff;padding:10px;border:none;border-radius:6px;cursor:pointer;font-size:12px">Add Shadow</button>
+          <button onclick="applyTextEffect('glow')" style="background:#8b5cf6;color:#fff;padding:10px;border:none;border-radius:6px;cursor:pointer;font-size:12px">Add Glow</button>
+        </div>
+      `);
+    }
+    
+    function openLayoutGrid() {
+      const modal = createToolModal('📐 Layout Tools', `
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:20px 0">
+          <button id="gridLayoutBtn" style="background:#3b82f6;color:#fff;padding:12px;border:none;border-radius:6px;cursor:pointer;font-size:12px">📊 Grid</button>
+          <button id="circleLayoutBtn" style="background:#10b981;color:#fff;padding:12px;border:none;border-radius:6px;cursor:pointer;font-size:12px">⭕ Circle</button>
+        </div>
+      `);
+      
+      // Add event listeners after modal is created
+      setTimeout(() => {
+        const gridBtn = document.getElementById('gridLayoutBtn');
+        const circleBtn = document.getElementById('circleLayoutBtn');
+        if(gridBtn) gridBtn.onclick = () => applyLayout('grid');
+        if(circleBtn) circleBtn.onclick = () => applyLayout('circle');
+      }, 10);
+    }
+    
+    function closeToolModal() {
+      const modals = document.querySelectorAll('.tool-modal');
+      modals.forEach(modal => {
+        if(modal && modal.parentNode) {
+          modal.parentNode.removeChild(modal);
+        }
+      });
+    }
+    
+    function createToolModal(title, content) {
+      const modal = document.createElement('div');
+      modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box';
+      modal.className = 'tool-modal';
+      
+      const modalContent = document.createElement('div');
+      modalContent.style.cssText = 'background:#fff;border-radius:12px;padding:20px;max-width:500px;width:100%;max-height:80vh;overflow-y:auto';
+      
+      modalContent.innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px">
+          <h3 style="margin:0;color:#0b7a3b">${title}</h3>
+          <button class="close-modal-btn" style="background:none;border:none;font-size:24px;cursor:pointer;color:#666">&times;</button>
+        </div>
+        ${content}
+      `;
+      
+      modal.appendChild(modalContent);
+      document.body.appendChild(modal);
+      
+      // Add close functionality
+      const closeBtn = modalContent.querySelector('.close-modal-btn');
+      if(closeBtn) {
+        closeBtn.onclick = closeToolModal;
+      }
+      
+      // Close on background click
+      modal.onclick = (e) => {
+        if(e.target === modal) closeToolModal();
+      };
+      
+      return modal;
+    }
+    
+    function applyColorScheme(color1, color2) {
+      const headlinePicker = document.getElementById('headlineColorPicker');
+      const color1El = document.getElementById('headlineColor1');
+      const color2El = document.getElementById('headlineColor2');
+      
+      if(headlinePicker) headlinePicker.value = color1;
+      if(color1El) color1El.setAttribute('stop-color', color1);
+      if(color2El) color2El.setAttribute('stop-color', color2);
+      
+      setTimeout(closeToolModal, 100);
+    }
+    
+    function applyFont(fontFamily, fontWeight) {
+      const svgText = document.getElementById('svgHeadline');
+      if(svgText) {
+        svgText.style.fontFamily = fontFamily;
+        svgText.style.fontWeight = fontWeight;
+      }
+      setTimeout(closeToolModal, 100);
+    }
+    
+    function applyTextEffect(effect) {
+      const svgText = document.getElementById('svgHeadline');
+      if(svgText) {
+        if(effect === 'shadow') {
+          svgText.style.filter = 'drop-shadow(2px 2px 4px rgba(0,0,0,0.5))';
+        } else if(effect === 'glow') {
+          svgText.style.filter = 'drop-shadow(0 0 10px rgba(255,255,255,0.8))';
+        }
+      }
+      setTimeout(closeToolModal, 100);
+    }
+    
+    function applyLayout(layout) {
+      const images = document.querySelectorAll('.product-row img');
+      if(layout === 'grid') {
+        images.forEach((img, idx) => {
+          const row = Math.floor(idx / 3);
+          const col = idx % 3;
+          img.style.left = 20 + (col * 90) + 'px';
+          img.style.top = 50 + (row * 90) + 'px';
+          img.style.transform = 'rotate(0deg)';
+          if(typeof saveImagePosition === 'function') saveImagePosition(img);
+        });
+      } else if(layout === 'circle') {
+        const centerX = 150, centerY = 100, radius = 60;
+        images.forEach((img, idx) => {
+          const angle = (idx / images.length) * 2 * Math.PI;
+          img.style.left = centerX + Math.cos(angle) * radius + 'px';
+          img.style.top = centerY + Math.sin(angle) * radius + 'px';
+          img.style.transform = 'rotate(0deg)';
+          if(typeof saveImagePosition === 'function') saveImagePosition(img);
+        });
+      }
+      setTimeout(closeToolModal, 100);
+    }
+    
+    window.applyColorScheme = applyColorScheme;
+    window.applyFont = applyFont;
+    window.applyTextEffect = applyTextEffect;
+    window.applyLayout = applyLayout;
+    window.closeToolModal = closeToolModal;
     
     // Testimonials functionality
     let testimonials = [];
@@ -2420,52 +2873,234 @@
     
     function startFromScratch(){
       if(confirm('This will clear all current content. Continue?')){
-        // Clear all fields
-        document.getElementById('businessNameInput').value = '';
-        document.getElementById('businessTypeSelect').value = '';
-        document.getElementById('headlineInput').value = '';
-        document.getElementById('sublineInput').value = '';
-        document.getElementById('tagsInput').value = '';
-        document.getElementById('advertInput').value = '';
-        document.getElementById('addressInput').value = '';
-        document.getElementById('contactInput').value = '';
-        document.getElementById('emailInput').value = '';
-        document.getElementById('websiteInput').value = '';
-        
-        // Reset colors to default
-        document.getElementById('headlineColorPicker').value = '#0b7a3b';
-        document.getElementById('headlineColor1').setAttribute('stop-color', '#0b7a3b');
-        document.getElementById('headlineColor2').setAttribute('stop-color', '#1a7a3b');
-        document.getElementById('footerColorPicker').value = '#0b7a3b';
-        document.getElementById('flyerFooter').style.background = 'linear-gradient(90deg,#0b7a3b,#1a7a3b)';
-        
-        // Reset flyer content
-        document.getElementById('svgHeadline').textContent = 'YOUR HEADLINE';
-        document.getElementById('flyerDesc').innerHTML = 'Your description goes here.<br>Add your message to engage customers.';
-        document.getElementById('flyerAdvert').innerHTML = 'Your advertisement message here.';
-        document.getElementById('flyerTags').innerHTML = '';
-        document.getElementById('businessNameDisplay').textContent = 'Your Business Name';
-        
-        // Clear images
-        document.getElementById('flyerProducts').innerHTML = '';
-        
-        updateProgress();
+        clearAllContent();
         closeTemplateModal();
-        
         alert('✨ Blank canvas ready! Start creating your unique design.');
+      }
+    }
+    
+    function startBlankTemplate(){
+      clearAllContent();
+      closeTemplateModal();
+      
+      // Show blank template instructions
+      showResponseModal('🎨', 'Blank Canvas Mode', 'Blank canvas activated!<br>• Hover over sections to remove them<br>• Click text to edit inline<br>• Upload images and drag anywhere<br>• Use Creator Tools for advanced features', 'success');
+    }
+    
+    function clearAllContent(){
+      // Clear all fields
+      document.getElementById('businessNameInput').value = '';
+      document.getElementById('businessTypeSelect').value = '';
+      document.getElementById('headlineInput').value = '';
+      document.getElementById('sublineInput').value = '';
+      document.getElementById('tagsInput').value = '';
+      document.getElementById('advertInput').value = '';
+      document.getElementById('addressInput').value = '';
+      document.getElementById('contactInput').value = '';
+      document.getElementById('emailInput').value = '';
+      document.getElementById('websiteInput').value = '';
+      
+      // Reset flyer to blank state
+      const flyer = document.getElementById('flyer');
+      flyer.style.background = '#ffffff';
+      flyer.style.color = '#111';
+      
+      // Make elements removable and editable
+      enableBlankCanvasMode();
+      
+      // Clear images
+      document.getElementById('flyerProducts').innerHTML = '';
+      
+      // Clear current day data
+      const key = storageKey(DAYS[currentDayIndex]);
+      localStorage.removeItem(key);
+      
+      updateProgress();
+    }
+    
+    function enableBlankCanvasMode(){
+      // Add remove buttons and inline editing to all sections
+      const sections = [
+        {id: 'flyerLogo', name: 'Logo'},
+        {id: 'svgHeadline', name: 'Headline', parent: '.title'},
+        {id: 'flyerDesc', name: 'Description'},
+        {id: 'flyerTags', name: 'Tags'},
+        {id: 'flyerAdvert', name: 'Advertisement'},
+        {id: 'flyerFooter', name: 'Footer'}
+      ];
+      
+      sections.forEach(section => {
+        const element = document.getElementById(section.id);
+        if(element && !element.dataset.blankMode){
+          element.dataset.blankMode = 'true';
+          
+          // Add remove button
+          const removeBtn = document.createElement('button');
+          removeBtn.innerHTML = '×';
+          removeBtn.style.cssText = 'position:absolute;top:-10px;right:-10px;width:20px;height:20px;background:#ef4444;color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:12px;z-index:100;display:none';
+          removeBtn.onclick = () => toggleSection(section.id);
+          
+          // Make parent relative for positioning
+          const parent = section.parent ? document.querySelector(section.parent) : element.parentElement;
+          if(parent) {
+            parent.style.position = 'relative';
+            parent.appendChild(removeBtn);
+          }
+          
+          // Show remove button on hover
+          element.addEventListener('mouseenter', () => removeBtn.style.display = 'block');
+          element.addEventListener('mouseleave', () => removeBtn.style.display = 'none');
+          
+          // Make text elements editable
+          if(['flyerDesc', 'flyerAdvert'].includes(section.id)){
+            element.contentEditable = true;
+            element.style.cursor = 'text';
+            element.style.border = '1px dashed transparent';
+            element.addEventListener('focus', () => element.style.border = '1px dashed #0b7a3b');
+            element.addEventListener('blur', () => element.style.border = '1px dashed transparent');
+            element.addEventListener('mouseup', showTextToolbar);
+            element.addEventListener('keyup', showTextToolbar);
+          }
+          
+          if(section.id === 'svgHeadline'){
+            element.addEventListener('click', () => {
+              const newText = prompt('Edit headline:', element.textContent);
+              if(newText !== null) element.textContent = newText;
+            });
+          }
+        }
+      });
+    }
+    
+    function toggleSection(sectionId){
+      const element = document.getElementById(sectionId);
+      if(element){
+        if(element.style.display === 'none'){
+          element.style.display = '';
+        } else {
+          element.style.display = 'none';
+        }
       }
     }
     
     // Event listeners
     document.getElementById('templatesBtn').addEventListener('click', openTemplateModal);
-    document.getElementById('scratchBtn').addEventListener('click', startFromScratch);
+    document.getElementById('scratchBtn').addEventListener('click', startBlankTemplate);
     
-    // Add progress tracking to inputs
-    ['businessNameInput', 'businessTypeSelect', 'headlineInput', 'sublineInput', 'tagsInput'].forEach(id => {
+    // Make functions globally available
+    window.startBlankTemplate = startBlankTemplate;
+    window.startFromScratch = startFromScratch;
+    
+    function addTextBox(){
+      const flyer = document.getElementById('flyer');
+      const textBox = document.createElement('div');
+      textBox.contentEditable = true;
+      textBox.innerHTML = 'Click to edit text';
+      textBox.style.cssText = 'position:absolute;top:50px;left:50px;padding:10px;border:1px dashed #0b7a3b;background:rgba(255,255,255,0.9);cursor:text;min-width:100px;z-index:10;user-select:text';
+      textBox.className = 'custom-text-box';
+      
+      // Add drag handle
+      const dragHandle = document.createElement('div');
+      dragHandle.innerHTML = '⋮⋮';
+      dragHandle.style.cssText = 'position:absolute;top:-5px;left:-5px;width:15px;height:15px;background:#0b7a3b;color:#fff;border-radius:3px;cursor:move;font-size:8px;text-align:center;line-height:15px;display:none';
+      textBox.appendChild(dragHandle);
+      
+      // Add remove button
+      const removeBtn = document.createElement('button');
+      removeBtn.innerHTML = '×';
+      removeBtn.style.cssText = 'position:absolute;top:-10px;right:-10px;width:20px;height:20px;background:#ef4444;color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:12px;display:none';
+      removeBtn.onclick = (e) => {
+        e.stopPropagation();
+        flyer.removeChild(textBox);
+      };
+      textBox.appendChild(removeBtn);
+      
+      // Show controls on hover
+      textBox.addEventListener('mouseenter', () => {
+        dragHandle.style.display = 'block';
+        removeBtn.style.display = 'block';
+      });
+      textBox.addEventListener('mouseleave', () => {
+        dragHandle.style.display = 'none';
+        removeBtn.style.display = 'none';
+      });
+      
+      // Make draggable via handle
+      dragHandle.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        startDragTextBox(e, textBox);
+      });
+      
+      // Add text formatting for custom text boxes
+      textBox.addEventListener('mouseup', showTextToolbar);
+      textBox.addEventListener('keyup', showTextToolbar);
+      
+      flyer.appendChild(textBox);
+    }
+    
+    function startDragTextBox(e, textBox){
+      e.preventDefault();
+      let isDragging = true;
+      const rect = textBox.getBoundingClientRect();
+      const flyerRect = textBox.parentElement.getBoundingClientRect();
+      const startX = e.clientX - rect.left;
+      const startY = e.clientY - rect.top;
+      
+      textBox.style.cursor = 'grabbing';
+      
+      function drag(e){
+        if(!isDragging) return;
+        const x = e.clientX - flyerRect.left - startX;
+        const y = e.clientY - flyerRect.top - startY;
+        textBox.style.left = Math.max(0, x) + 'px';
+        textBox.style.top = Math.max(0, y) + 'px';
+      }
+      
+      function stopDrag(){
+        isDragging = false;
+        textBox.style.cursor = 'text';
+        document.removeEventListener('mousemove', drag);
+        document.removeEventListener('mouseup', stopDrag);
+      }
+      
+      document.addEventListener('mousemove', drag);
+      document.addEventListener('mouseup', stopDrag);
+    }
+    
+    let sectionRemoveMode = false;
+    function toggleSectionMode(){
+      sectionRemoveMode = !sectionRemoveMode;
+      const sections = document.querySelectorAll('#flyer [id]');
+      
+      sections.forEach(section => {
+        if(sectionRemoveMode){
+          section.style.border = '2px dashed #ef4444';
+          section.style.cursor = 'pointer';
+          section.onclick = () => {
+            if(confirm('Remove this section?')){
+              section.style.display = 'none';
+            }
+          };
+        } else {
+          section.style.border = 'none';
+          section.style.cursor = 'default';
+          section.onclick = null;
+        }
+      });
+    }
+    
+    // Add progress tracking to inputs and save state
+    ['businessNameInput', 'businessTypeSelect', 'headlineInput', 'sublineInput', 'tagsInput', 'advertInput', 'addressInput', 'contactInput', 'emailInput', 'websiteInput'].forEach(id => {
       const element = document.getElementById(id);
       if(element) {
-        element.addEventListener('input', updateProgress);
-        element.addEventListener('change', updateProgress);
+        element.addEventListener('input', () => {
+          updateProgress();
+          saveState();
+        });
+        element.addEventListener('change', () => {
+          updateProgress();
+          saveState();
+        });
       }
     });
 
@@ -2496,6 +3131,14 @@
     updateStats();
     loadSelectedTemplate();
     loadTestimonials();
+    
+    // Make text elements editable by default
+    makeTextEditable();
+    
+    // Save initial state
+    setTimeout(() => {
+      saveState();
+    }, 1000);
     
     // Welcome message for first-time users
     if(!localStorage.getItem('flyerforge-welcomed')){
